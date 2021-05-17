@@ -31,10 +31,7 @@ public class ClientProfile extends AppCompatActivity {
         if (str.size() != 6) {
             Intent i = new Intent(ClientProfile.this, MainActivity.class);
             startActivity(i);
-            Log.i("fd","fsssss");
-
         } else {
-            Log.i("fd","fsttt");
             username = findViewById(R.id.seeUsername);
             phoneNumber = findViewById(R.id.seePhoneNumber);
             preferences = findViewById(R.id.seePreferences);
