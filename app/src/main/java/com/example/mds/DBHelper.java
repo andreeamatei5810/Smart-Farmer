@@ -13,13 +13,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     public DBHelper(Context context) {
-        super(context, "Database.db", null, 1);
+        super(context, "Project.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
         DB.execSQL("create Table Client(email TEXT primary key, " +
                 "password TEXT, username TEXT, phoneNumber TEXT, preferences TEXT, privacy TEXT)");
+        DB.execSQL("create Table Product(name TEXT primary key, " +
+                "price INT,description TEXT)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -160,6 +162,31 @@ public class DBHelper extends SQLiteOpenHelper {
             return false;
         }
 
+    }
+
+    public boolean insertProduct(String name, int price, String description){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name",name);
+        contentValues.put("price",price);
+        contentValues.put("description",description);
+        long productadded = DB.insert("Product",null,contentValues);
+        if(productadded == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+
+
+
+    }
+
+    public Cursor getProducts(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from Product",null);
+        return cursor;
     }
 
 }

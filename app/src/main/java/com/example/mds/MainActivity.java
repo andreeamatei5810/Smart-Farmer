@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button farmerProfile,login,dbButton,deleteUsers, clientProfile;
+    Button farmerProfile,login,dbButton,deleteUsers, clientProfile,addProduct,dbProd;
     DBHelper dbHelper;
 
     @Override
@@ -75,6 +75,31 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,ClientProfile.class);
                 startActivity(i);
+            }
+
+
+
+        });
+
+        dbProd = findViewById(R.id.products);
+        dbProd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor cursor = dbHelper.getProducts();
+                if(cursor.getCount() >0){
+                    StringBuffer buffer= new StringBuffer();
+                    while(cursor.moveToNext()){
+                        buffer.append("Name = " + cursor.getString(0) + ", Price = " + cursor.getString(1) + ", Description = " + cursor.getString(2)+"\n");
+                    }
+                    AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
+                    builder.setCancelable(true);
+                    builder.setTitle("Entries");
+                    builder.setMessage(buffer.toString());
+                    builder.show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "NO ENTRIES", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
