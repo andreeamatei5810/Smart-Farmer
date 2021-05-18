@@ -12,14 +12,13 @@
 
 
     <androidx.cardview.widget.CardView
-        xmlns:Card_View="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:padding="10dp"
-        Card_View:cardCornerRadius="5dp"
-        Card_View:cardElevation="5dp">
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,6 +103,25 @@
                     android:singleLine="true"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioGroup
+                android:id="@+id/radioGroupRole"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButtonClient"
+                    android:layout_width="193dp"
+                    android:layout_height="wrap_content"
+                    android:text="Client" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonFarmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Farmer" />
+            </RadioGroup>
 
             <Button
                 android:id="@+id/register"

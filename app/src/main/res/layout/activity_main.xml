@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonFarmerProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -24,12 +24,12 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="LOGIN"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/buttonFarmerProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonCont"
+        android:id="@+id/buttonAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -48,37 +48,37 @@
         android:layout_marginEnd="16dp"
         android:text="GET USERS"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonFarmerProfile" />
 
     <Button
-        android:id="@+id/buttonDelete"
+        android:id="@+id/buttonDeleteUsers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="DELETE USERS"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCont" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAccount" />
 
     <Button
-        android:id="@+id/products"
+        android:id="@+id/buttonGetProducts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Get products"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.613"
-        app:layout_constraintStart_toEndOf="@+id/buttonDelete"
+        app:layout_constraintStart_toEndOf="@+id/buttonDeleteUsers"
         app:layout_constraintTop_toBottomOf="@+id/buttonGetUsers" />
 
     <Button
-        android:id="@+id/buttonProduct"
+        android:id="@+id/buttonAddProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginTop="44dp"
         android:text="Add product"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDelete" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonDeleteUsers" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

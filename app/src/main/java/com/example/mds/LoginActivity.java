@@ -39,7 +39,13 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SetValidation();
+
+                boolean check = SetValidation();
+                if(check == true){
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    intent.putExtra("email",email.getText().toString());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -53,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void SetValidation() {
+    public boolean SetValidation() {
         // Check for a valid email address.
         if (email.getText().toString().isEmpty()) {
             emailError.setError("Please write an email address");
@@ -85,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 cursor.moveToFirst();
                 if(password.getText().toString().equals(cursor.getString(1))){
                     Toast.makeText(getApplicationContext(), "Successfully logged in", Toast.LENGTH_SHORT).show();
+                    return true;
                 }else{
                     Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
                 }
@@ -93,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         }
+        return false;
 
     }
 }

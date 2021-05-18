@@ -13,7 +13,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".ClientProfile" />
         <activity android:name=".ClientEditProfile" />
-
+        <activity android:name=".ProductActivity" />
         <activity android:name=".FarmerProfileActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

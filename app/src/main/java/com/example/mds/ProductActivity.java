@@ -2,18 +2,13 @@ package com.example.mds;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageSwitcher;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.textfield.TextInputLayout;
 
 public class ProductActivity extends AppCompatActivity {
 
@@ -25,15 +20,14 @@ public class ProductActivity extends AppCompatActivity {
     private ImageSwitcher imageview;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        prodName = (EditText) findViewById(R.id.productN);
-        prodPrice = (EditText) findViewById(R.id.productP);
-        prodDescription = (EditText) findViewById(R.id.productD);
+        prodName = (EditText) findViewById(R.id.editTextName);
+        prodPrice = (EditText) findViewById(R.id.editTextPrice);
+        prodDescription = (EditText) findViewById(R.id.editTextDescription);
         addProduct = (Button) findViewById(R.id.confirm);
 
         dbHelper = new DBHelper(this);
@@ -43,7 +37,7 @@ public class ProductActivity extends AppCompatActivity {
                 check =  dbHelper.insertProduct(prodName.getText().toString(), Integer.parseInt(prodPrice.getText().toString()),prodDescription.getText().toString());
 
                 if(check == true){
-                    Toast.makeText(ProductActivity.this, "New Client Inserted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProductActivity.this, "New Product Inserted", Toast.LENGTH_SHORT).show();
 
                 }
                 else{
@@ -52,19 +46,6 @@ public class ProductActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

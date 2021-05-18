@@ -3,10 +3,15 @@ package com.example.mds;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+
+import org.w3c.dom.Text;
 
 public class FarmerProfileActivity extends AppCompatActivity {
 
@@ -15,6 +20,10 @@ public class FarmerProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farmer_profile);
+        Intent pastIntent = getIntent();
+        String userEmail = pastIntent.getStringExtra("email");
+        DBHelper database = new DBHelper(this);
+        TextView name = (TextView) findViewById(R.id.textViewName);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         TabItem tabProd = findViewById(R.id.tabProducts);
@@ -39,6 +48,11 @@ public class FarmerProfileActivity extends AppCompatActivity {
 
             }
         });
+
+        Cursor cursor = database.getClient(userEmail);
+        cursor.moveToFirst();
+        name.setText(cursor.getString(2));
+
     }
 
 }

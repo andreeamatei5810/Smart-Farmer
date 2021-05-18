@@ -13,13 +13,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     public DBHelper(Context context) {
-        super(context, "Project.db", null, 1);
+        super(context, "Project3.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
         DB.execSQL("create Table Client(email TEXT primary key, " +
-                "password TEXT, username TEXT, phoneNumber TEXT, preferences TEXT, privacy TEXT)");
+                "password TEXT, username TEXT, phoneNumber TEXT, role TEXT, preferences TEXT, privacy TEXT)");
         DB.execSQL("create Table Product(name TEXT primary key, " +
                 "price INT,description TEXT)");
     }
@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists Client");
     }
 
-    public boolean insertClient(String email, String password, String username,String phoneNumber)
+    public boolean insertClient(String email, String password, String username,String phoneNumber,String role)
     {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -36,6 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("password", password);
         contentValues.put("username", username);
         contentValues.put("phoneNumber",phoneNumber);
+        contentValues.put("role",role);
         contentValues.put("preferences","");
         contentValues.put("privacy","public");
         long result=DB.insert("Client", null, contentValues);

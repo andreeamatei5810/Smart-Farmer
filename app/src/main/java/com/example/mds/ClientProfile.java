@@ -27,7 +27,9 @@ public class ClientProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_profile);
         database = new DBHelper(this);
-        ArrayList<String> str = database.getClientInfo("test@gmail.com");
+        Intent pastIntent = getIntent();
+        String emailUser = pastIntent.getStringExtra("email");
+        ArrayList<String> str = database.getClientInfo(emailUser);
         if (str.size() != 6) {
             Intent i = new Intent(ClientProfile.this, MainActivity.class);
             startActivity(i);
@@ -78,6 +80,7 @@ public class ClientProfile extends AppCompatActivity {
             editButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent i = new Intent(ClientProfile.this, ClientEditProfile.class);
+                    i.putExtra("email",emailUser);
                     startActivity(i);
                 }
             });
@@ -86,6 +89,7 @@ public class ClientProfile extends AppCompatActivity {
             backMain.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent i = new Intent(ClientProfile.this, MainActivity.class);
+                    i.putExtra("email",emailUser);
                     startActivity(i);
                 }
             });

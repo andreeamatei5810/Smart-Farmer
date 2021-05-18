@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,9 +17,10 @@ import com.google.android.material.textfield.TextInputLayout;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText name, email, phone, password;
+    RadioButton radioButtonFarmer,radioButtonClient;
     Button register;
     TextView login;
-    boolean isNameValid, isEmailValid, isPhoneValid, isPasswordValid;
+    boolean isNameValid, isEmailValid, isPhoneValid, isPasswordValid, isButtonChecked;
     TextInputLayout nameError, emailError, phoneError, passError;
     DBHelper dbHelper;
 
@@ -31,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         phone = (EditText) findViewById(R.id.phone);
         password = (EditText) findViewById(R.id.password);
+        radioButtonClient = (RadioButton) findViewById(R.id.radioButtonClient);
+        radioButtonFarmer = (RadioButton) findViewById(R.id.radioButtonFarmer);
         login = (TextView) findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
         nameError = (TextInputLayout) findViewById(R.id.nameError);
@@ -99,8 +103,15 @@ public class RegisterActivity extends AppCompatActivity {
             passError.setErrorEnabled(false);
         }
 
-        if (isNameValid && isEmailValid && isPhoneValid && isPasswordValid) {
-            Boolean check = dbHelper.insertClient(email.getText().toString(),password.getText().toString(),name.getText().toString(),phone.getText().toString());
+        if(radioButtonFarmer.isChecked() || radioButtonClient.isChecked()){
+            isButtonChecked = true;
+        }else{
+            isButtonChecked =  false;
+        }
+
+        if (isNameValid && isEmailValid && isPhoneValid && isPasswordValid && isButtonChecked) {
+            String role = radioButtonClient.isChecked() == true ? "client" : "farmer";
+            Boolean check = dbHelper.insertClient(email.getText().toString(),password.getText().toString(),name.getText().toString(),phone.getText().toString(),role);
                 if(check == true){
                     Toast.makeText(RegisterActivity.this, "New Client Inserted", Toast.LENGTH_SHORT).show();
                     System.out.println(email.getText().toString());

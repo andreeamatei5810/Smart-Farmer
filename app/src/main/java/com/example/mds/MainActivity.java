@@ -1,6 +1,5 @@
 package com.example.mds;
 
-import android.util.Log;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,11 +19,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        farmerProfile = findViewById(R.id.button);
+        farmerProfile = findViewById(R.id.buttonFarmerProfile);
         farmerProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,FarmerProfileActivity.class);
+                Intent pastIntent = getIntent();
+                String email = pastIntent.getStringExtra("email");
+                i.putExtra("email",email);
                 startActivity(i);
             }
         });
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 if(cursor.getCount() >0){
                     StringBuffer buffer= new StringBuffer();
                     while(cursor.moveToNext()){
-                        buffer.append("Email = " + cursor.getString(0) + ", Password = " + cursor.getString(1) + "\n");
+                        buffer.append("Email = " + cursor.getString(0) + ", Password = " + cursor.getString(1)+ ", Role = " + cursor.getString(4) + "\n");
                     }
                     AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
                     builder.setCancelable(true);
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        deleteUsers = findViewById(R.id.buttonDelete);
+        deleteUsers = findViewById(R.id.buttonDeleteUsers);
         deleteUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,11 +71,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        clientProfile = findViewById(R.id.buttonCont);
+        clientProfile = findViewById(R.id.buttonAccount);
         clientProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,ClientProfile.class);
+                Intent pastIntent = getIntent();
+                String email = pastIntent.getStringExtra("email");
+                i.putExtra("email",email);
                 startActivity(i);
             }
 
@@ -81,7 +86,19 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        dbProd = findViewById(R.id.products);
+        addProduct = findViewById(R.id.buttonAddProduct);
+        addProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,ProductActivity.class);
+                Intent pastIntent = getIntent();
+                String email = pastIntent.getStringExtra("email");
+                i.putExtra("email",email);
+                startActivity(i);
+            }
+        });
+
+        dbProd = findViewById(R.id.buttonGetProducts);
         dbProd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
