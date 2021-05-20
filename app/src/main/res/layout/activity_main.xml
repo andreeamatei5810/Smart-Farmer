@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Profil fermier"
+        android:text="@string/profil_fermier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="LOGIN"
+        android:text="@string/login"
         app:layout_constraintEnd_toStartOf="@+id/buttonFarmerProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="CONT"
+        android:text="@string/cont"
         app:layout_constraintEnd_toStartOf="@+id/buttonGetUsers"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="GET USERS"
+        android:text="@string/get_users"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonFarmerProfile" />
 
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="DELETE USERS"
+        android:text="@string/delete_users"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonAccount" />
 
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Get products"
+        android:text="@string/get_products"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.613"
         app:layout_constraintStart_toEndOf="@+id/buttonDeleteUsers"
@@ -77,8 +77,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginTop="44dp"
-        android:text="Add product"
+        android:text="@string/add_product"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonDeleteUsers" />
+    <Button
+            android:text="@string/chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/contacts"
+            android:layout_marginStart="79dp" app:layout_constraintStart_toEndOf="@+id/buttonAddProduct"
+            android:layout_marginTop="48dp" app:layout_constraintTop_toBottomOf="@+id/buttonGetProducts"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

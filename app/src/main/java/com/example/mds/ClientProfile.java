@@ -1,13 +1,12 @@
 package com.example.mds;
 
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -29,11 +28,12 @@ public class ClientProfile extends AppCompatActivity {
         database = new DBHelper(this);
         Intent pastIntent = getIntent();
         String emailUser = pastIntent.getStringExtra("email");
-        ArrayList<String> str = database.getClientInfo(emailUser);
-        if (str.size() != 6) {
+        if (emailUser == null) {
+            Toast.makeText(getApplicationContext(), "No user logged in", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(ClientProfile.this, MainActivity.class);
             startActivity(i);
         } else {
+            ArrayList<String> str = database.getClientInfo(emailUser);
             username = findViewById(R.id.seeUsername);
             phoneNumber = findViewById(R.id.seePhoneNumber);
             preferences = findViewById(R.id.seePreferences);

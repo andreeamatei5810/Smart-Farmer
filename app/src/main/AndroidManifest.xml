@@ -15,8 +15,11 @@
         <activity android:name=".ClientEditProfile" />
         <activity android:name=".ProductActivity" />
         <activity android:name=".FarmerProfileActivity" />
+        <activity android:name="chat.ChatActivity"/>
+        <activity android:name="chat.ChatContactActivity"/>
+        <activity android:name="chat.NewMessageActivity"/>
         <activity android:name=".MainActivity">
-            <intent-filter>
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

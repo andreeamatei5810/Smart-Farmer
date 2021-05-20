@@ -19,4 +19,25 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="go_back_to_profile">Go back to profile</string>
+    <string name="messages_sent">Messages sent</string>
+    <string name="messages_received">Messages received</string>
+    <string name="messages">Messages</string>
+    <string name="profil_fermier">Profil fermier</string>
+    <string name="login">LOGIN</string>
+    <string name="cont">CONT</string>
+    <string name="add_product">Add Product</string>
+    <string name="product_name">Product name</string>
+    <string name="_0">0</string>
+    <string name="product_description">Product description</string>
+    <string name="send_message_to">Send message to:</string>
+    <string name="enter_the_email_address">Enter the email address</string>
+    <string name="send_new_message">Send new message</string>
+    <string name="message">Message</string>
+    <string name="send_image">Send Image</string>
+    <string name="get_products">Get products</string>
+    <string name="delete_users">DELETE USERS</string>
+    <string name="get_users">GET USERS</string>
+    <string name="chat">Chat</string>
+    <string name="price">Price</string>
+    <string name="go_back_to_all_messages">Go back to all messages</string>
 </resources>

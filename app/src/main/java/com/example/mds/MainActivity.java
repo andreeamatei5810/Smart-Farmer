@@ -9,10 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import chat.ChatContactActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button farmerProfile,login,dbButton,deleteUsers, clientProfile,addProduct,dbProd;
+    Button farmerProfile,login,dbButton,deleteUsers, clientProfile,addProduct,dbProd,contacts;
     DBHelper dbHelper;
 
     @Override
@@ -40,6 +41,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        contacts = findViewById(R.id.contacts);
+        contacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ChatContactActivity.class);
+                Intent pastIntent = getIntent();
+                String email = pastIntent.getStringExtra("email");
+                i.putExtra("email",email);
+                startActivity(i);
+            }
+        });
+
         dbHelper = new DBHelper(this);
         dbButton = findViewById(R.id.buttonGetUsers);
         dbButton.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 if(cursor.getCount() >0){
                     StringBuffer buffer= new StringBuffer();
                     while(cursor.moveToNext()){
-                        buffer.append("Email = " + cursor.getString(0) + ", Password = " + cursor.getString(1)+ ", Role = " + cursor.getString(4) + "\n");
+                        buffer.append("Email = ").append(cursor.getString(0)).append(", Password = ").append(cursor.getString(1)).append(", Role = ").append(cursor.getString(4)).append("\n");
                     }
                     AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
                     builder.setCancelable(true);
@@ -106,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 if(cursor.getCount() >0){
                     StringBuffer buffer= new StringBuffer();
                     while(cursor.moveToNext()){
-                        buffer.append("Name = " + cursor.getString(0) + ", Price = " + cursor.getString(1) + ", Description = " + cursor.getString(2)+"\n");
+                        buffer.append("Name = ").append(cursor.getString(0)).append(", Price = ").append(cursor.getString(1)).append(", Description = ").append(cursor.getString(2)).append("\n");
                     }
                     AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
                     builder.setCancelable(true);

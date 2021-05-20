@@ -37,6 +37,9 @@ public class ClientEditProfile extends AppCompatActivity {
         phoneText = findViewById(R.id.editPhone);
         emailText.setText(str.get(0));
         final String emailTextFirstValue =  String.valueOf(emailText.getText());
+        if(!emailTextFirstValue.equals("")) {
+            emailUser = emailTextFirstValue;
+        }
         passwordText.setText(str.get(1));
         final String passwordTextFirstValue =  String.valueOf(passwordText.getText());
         usernameText.setText(str.get(2));
@@ -84,10 +87,11 @@ public class ClientEditProfile extends AppCompatActivity {
         });
 
         backButton = findViewById(R.id.back);
+        String finalEmailUser = emailUser;
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(ClientEditProfile.this, ClientProfile.class);
-                i.putExtra("email",emailUser);
+                i.putExtra("email", finalEmailUser);
                 startActivity(i);
             }
         });
