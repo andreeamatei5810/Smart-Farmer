@@ -18,11 +18,11 @@
         </activity>
         <activity android:name=".ClientProfile" />
         <activity android:name=".ClientEditProfile" />
-        <activity android:name=".ProductActivity" />
         <activity android:name=".FarmerProfileActivity" />
         <activity android:name="chat.ChatActivity"/>
         <activity android:name="chat.ChatContactActivity"/>
         <activity android:name="chat.NewMessageActivity"/>
+        <activity android:name=".UploadActivity" />
         <activity android:name=".MainActivity"/>
 
     </application>

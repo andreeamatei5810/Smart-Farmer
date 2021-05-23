@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".UploadActivity">
+
+
+    <EditText
+        android:id="@+id/prodN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter product name!"
+        android:maxLength="25"
+        android:textColor="@android:color/holo_green_dark"
+        android:textColorHint="@android:color/holo_green_dark" />
+    <EditText
+        android:id="@+id/prodP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter product price!"
+        android:maxLength="25"
+        android:layout_below="@+id/prodN"
+        android:textColor="@android:color/holo_green_dark"
+        android:textColorHint="@android:color/holo_green_dark" />
+    <EditText
+        android:id="@+id/prodD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter product description!"
+        android:maxLength="25"
+        android:layout_below="@+id/prodP"
+        android:textColor="@android:color/holo_green_dark"
+        android:textColorHint="@android:color/holo_green_dark" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/image"
+        android:layout_below="@+id/prodD"
+        android:src="@drawable/mood"
+        android:scaleType="centerCrop"
+        android:onClick="chooseImage"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Product"
+        android:id="@+id/saveBtn"
+        android:layout_below="@+id/image"
+        android:background="@android:color/holo_green_dark"
+        android:textColor="@android:color/white"
+        android:onClick="storeImage"
+
+
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/moveToShowActivity"
+        android:layout_below="@+id/saveBtn"
+        android:background="@android:color/holo_green_dark"
+        android:textColor="@android:color/white"
+        android:text="Move to show activity"
+        android:layout_marginTop="2dp"
+
+        />
+
+
+</RelativeLayout>

@@ -5,26 +5,34 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.os.Build;
+import android.widget.Toast;
+
 import androidx.annotation.RequiresApi;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    private ByteArrayOutputStream objectByteArrayOutputStream;
+    private byte[] imageInByte;
+    Context context;
 
     public DBHelper(Context context) {
         super(context, "Database6.db", null, 1);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
         DB.execSQL("create Table Client(email TEXT primary key, " +
                 "password TEXT, username TEXT, phoneNumber TEXT, role TEXT, preferences TEXT, privacy TEXT)");
-        DB.execSQL("create Table Product(name TEXT primary key, " +
-                "price INT,description TEXT,farmer_id TEXT,foreign key (farmer_id) references Client(email))");
         DB.execSQL("create Table ChatMessage(idMessage INTEGER primary key AUTOINCREMENT, textMessage TEXT, " +
                 "timeMessage TEXT, emailSender TEXT, emailReceiver TEXT, readMessage TEXT)");
+        DB.execSQL("create table Product(productName TEXT" + ",image BLOB,productPrice int, productDescription TEXT)");
     }
 
     @Override
@@ -161,22 +169,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean insertProduct(String name, int price, String description, String farmerId) {
-        SQLiteDatabase DB = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("name", name);
-        contentValues.put("price", price);
-        contentValues.put("description", description);
-        contentValues.put("farmer_id", farmerId);
-        long productAdded = DB.insert("Product", null, contentValues);
-        return productAdded != -1;
-
-    }
-
-    public Cursor getProducts() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("select * from Product", null);
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void insertMessage(String textMessage, String emailSender, String emailReceiver) {
@@ -216,7 +208,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<String> getMessages(String emailSender, String emailReceiver) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ArrayList<String> messages = new ArrayList<>();
-        try (Cursor cursor = DB.rawQuery("Select * from ChatMessage where (emailSender = ? and emailReceiver =?) or (emailSender = ? and emailReceiver =?)", new String[]{emailReceiver,emailSender,emailSender,emailReceiver})) {
+        try (Cursor cursor = DB.rawQuery("Select * from ChatMessage where (emailSender = ? and emailReceiver =?) or (emailSender = ? and emailReceiver =?)", new String[]{emailReceiver, emailSender, emailSender, emailReceiver})) {
             while (cursor.moveToNext()) {
                 int index = cursor.getColumnIndex("textMessage");
                 String currentMessage = cursor.getString(index) + "///";
@@ -232,23 +224,54 @@ public class DBHelper extends SQLiteOpenHelper {
         return messages;
     }
 
-    public void readAllMessages(String email){
+    public void readAllMessages(String email) {
         SQLiteDatabase DB = this.getWritableDatabase();
-        DB.execSQL("UPDATE ChatMessage SET readMessage = ? WHERE emailReceiver =? " ,new String[]{String.valueOf(Boolean.TRUE),email});
+        DB.execSQL("UPDATE ChatMessage SET readMessage = ? WHERE emailReceiver =? ", new String[]{String.valueOf(Boolean.TRUE), email});
     }
 
-    public int checkReadMessages(String emailSender, String emailCheck){
+    public int checkReadMessages(String emailSender, String emailCheck) {
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor cursor = DB.rawQuery("Select * from ChatMessage where emailSender = ? and emailReceiver =? and readMessage =?", new String[]{emailSender,emailCheck,String.valueOf(Boolean.FALSE)});
-        if(cursor.getCount()>0){
+        Cursor cursor = DB.rawQuery("Select * from ChatMessage where emailSender = ? and emailReceiver =? and readMessage =?", new String[]{emailSender, emailCheck, String.valueOf(Boolean.FALSE)});
+        if (cursor.getCount() > 0) {
             cursor.close();
             return 1;
-        }
-        else {
+        } else {
             cursor.close();
             return 0;
         }
     }
 
+    public void addProduct(ProductClass objectProductClass) {
+        try {
+            SQLiteDatabase objectSqlLiteDatabase = this.getWritableDatabase();
+            Bitmap imageToStoreBitmap = objectProductClass.getImage();
 
+            objectByteArrayOutputStream = new ByteArrayOutputStream();
+            imageToStoreBitmap.compress(Bitmap.CompressFormat.JPEG, 100, objectByteArrayOutputStream);
+            imageInByte = objectByteArrayOutputStream.toByteArray();
+
+            ContentValues objectContentValues = new ContentValues();
+
+
+            objectContentValues.put("productName", objectProductClass.getProdName());
+            objectContentValues.put("image", imageInByte);
+            objectContentValues.put("productPrice", objectProductClass.getProdPirce());
+            objectContentValues.put("productDescription", objectProductClass.getProdDescription());
+
+            long checkQueryRuns = objectSqlLiteDatabase.insert("Product", null, objectContentValues);
+            if (checkQueryRuns != -1) {
+                Toast.makeText(context, "Your product has been successfully added to the database!", Toast.LENGTH_SHORT).show();
+                objectSqlLiteDatabase.close();
+
+            } else {
+                Toast.makeText(context, "Did not work", Toast.LENGTH_SHORT).show();
+            }
+
+
+        } catch (Exception e) {
+
+        }
+
+
+    }
 }

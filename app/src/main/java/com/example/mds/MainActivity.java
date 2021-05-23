@@ -8,12 +8,17 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import chat.ChatContactActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button farmerProfile,login,dbButton,deleteUsers, clientProfile,addProduct,dbProd,contacts,logout;
+    private EditText imageDetailsET;
+    private ImageView objectImageView;
+
+    Button farmerProfile,login,dbButton,deleteUsers, clientProfile,addProduct,dbProd,contacts,logout,upload;
     DBHelper dbHelper;
 
     @Override
@@ -100,110 +105,15 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        addProduct = findViewById(R.id.buttonAddProduct);
-        addProduct.setOnClickListener(new View.OnClickListener() {
+
+        upload = findViewById(R.id.buttonUpload);
+        upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,ProductActivity.class);
+                Intent i = new Intent(MainActivity.this,UploadActivity.class);
                 startActivity(i);
             }
         });
-
-        dbProd = findViewById(R.id.buttonGetProducts);
-        dbProd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor cursor = dbHelper.getProducts();
-                if(cursor.getCount() >0){
-                    StringBuffer buffer= new StringBuffer();
-                    while(cursor.moveToNext()){
-                        buffer.append("Name = ").append(cursor.getString(0)).append(", Price = ").append(cursor.getString(1)).append(", Description = ").append(cursor.getString(2)).append(", Farmer email = ").append(cursor.getString(3)).append("\n");
-                    }
-                    AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
-                    builder.setCancelable(true);
-                    builder.setTitle("Entries");
-                    builder.setMessage(buffer.toString());
-                    builder.show();
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "NO ENTRIES", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-
-
-
-//
-//        db = new DBHelper(this);
-//
-//        insert.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String aux = text.getText().toString();
-//
-//                Boolean check = db.insertUserData(aux);
-//                if(check == true){
-//                    Toast.makeText(MainActivity.this, "New Entry Inserted", Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    Toast.makeText(MainActivity.this, "NOT INSERTED", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//
-//        update.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String aux = text.getText().toString();
-//
-//                Boolean check = db.updateUserData(aux);
-//                if(check == true){
-//                    Toast.makeText(MainActivity.this, "Entry Updated", Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    Toast.makeText(MainActivity.this, "NOT UPDATED", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String aux = text.getText().toString();
-//
-//                Boolean check = db.deleteUserData(aux);
-//                if(check == true){
-//                    Toast.makeText(MainActivity.this, "Entry Deleted", Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    Toast.makeText(MainActivity.this, "NOT DELETED", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//
-//        get.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Cursor cursor = db.getUserData();
-//                if(cursor.getCount() >0){
-//                    StringBuffer buffer= new StringBuffer();
-//                    while(cursor.moveToNext()){
-//                        buffer.append("Name = " + cursor.getString(0) + "\n");
-//                    }
-//                    AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
-//                    builder.setCancelable(true);
-//                    builder.setTitle("Entries");
-//                    builder.setMessage(buffer.toString());
-//                    builder.show();
-//                }
-//                else{
-//                    Toast.makeText(MainActivity.this, "NO ENTRIES", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
 
     }
 }
