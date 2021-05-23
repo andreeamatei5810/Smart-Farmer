@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     public DBHelper(Context context) {
-        super(context, "Database.db", null, 1);
+        super(context, "Database6.db", null, 1);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
         DB.execSQL("create Table Client(email TEXT primary key, " +
                 "password TEXT, username TEXT, phoneNumber TEXT, role TEXT, preferences TEXT, privacy TEXT)");
         DB.execSQL("create Table Product(name TEXT primary key, " +
-                "price INT,description TEXT)");
+                "price INT,description TEXT,farmer_id TEXT,foreign key (farmer_id) references Client(email))");
         DB.execSQL("create Table ChatMessage(idMessage INTEGER primary key AUTOINCREMENT, textMessage TEXT, " +
                 "timeMessage TEXT, emailSender TEXT, emailReceiver TEXT, readMessage TEXT)");
     }
@@ -161,12 +161,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean insertProduct(String name, int price, String description) {
+    public boolean insertProduct(String name, int price, String description, String farmerId) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("price", price);
         contentValues.put("description", description);
+        contentValues.put("farmer_id", farmerId);
         long productAdded = DB.insert("Product", null, contentValues);
         return productAdded != -1;
 

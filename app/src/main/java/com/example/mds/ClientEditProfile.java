@@ -27,8 +27,8 @@ public class ClientEditProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         database = new DBHelper(this);
-        Intent pastIntent = getIntent();
-        String emailUser = pastIntent.getStringExtra("email");
+        SessionManagement sessionManagement = new SessionManagement(ClientEditProfile.this);
+        String emailUser = sessionManagement.getSession();
         ArrayList<String> str = database.getClientInfo(emailUser);
         emailText = findViewById(R.id.editEmail);
         passwordText = findViewById(R.id.editPassword);
@@ -91,7 +91,6 @@ public class ClientEditProfile extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(ClientEditProfile.this, ClientProfile.class);
-                i.putExtra("email", finalEmailUser);
                 startActivity(i);
             }
         });

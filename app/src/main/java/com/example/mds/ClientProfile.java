@@ -26,8 +26,8 @@ public class ClientProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_profile);
         database = new DBHelper(this);
-        Intent pastIntent = getIntent();
-        String emailUser = pastIntent.getStringExtra("email");
+        SessionManagement sessionManagement = new SessionManagement(ClientProfile.this);
+        String emailUser = sessionManagement.getSession();
         if (emailUser == null) {
             Toast.makeText(getApplicationContext(), "No user logged in", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(ClientProfile.this, MainActivity.class);
@@ -80,7 +80,6 @@ public class ClientProfile extends AppCompatActivity {
             editButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent i = new Intent(ClientProfile.this, ClientEditProfile.class);
-                    i.putExtra("email",emailUser);
                     startActivity(i);
                 }
             });
@@ -89,7 +88,6 @@ public class ClientProfile extends AppCompatActivity {
             backMain.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent i = new Intent(ClientProfile.this, MainActivity.class);
-                    i.putExtra("email",emailUser);
                     startActivity(i);
                 }
             });

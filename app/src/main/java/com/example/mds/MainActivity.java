@@ -13,7 +13,7 @@ import chat.ChatContactActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button farmerProfile,login,dbButton,deleteUsers, clientProfile,addProduct,dbProd,contacts;
+    Button farmerProfile,login,dbButton,deleteUsers, clientProfile,addProduct,dbProd,contacts,logout;
     DBHelper dbHelper;
 
     @Override
@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,FarmerProfileActivity.class);
-                Intent pastIntent = getIntent();
-                String email = pastIntent.getStringExtra("email");
-                i.putExtra("email",email);
                 startActivity(i);
             }
         });
@@ -41,14 +38,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        logout = findViewById(R.id.buttonLogout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SessionManagement sessionManagement = new SessionManagement(MainActivity.this);
+                sessionManagement.removeSession();
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
+            }
+        });
+
         contacts = findViewById(R.id.contacts);
         contacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ChatContactActivity.class);
-                Intent pastIntent = getIntent();
-                String email = pastIntent.getStringExtra("email");
-                i.putExtra("email",email);
                 startActivity(i);
             }
         });
@@ -89,12 +94,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,ClientProfile.class);
-                Intent pastIntent = getIntent();
-                String email = pastIntent.getStringExtra("email");
-                i.putExtra("email",email);
                 startActivity(i);
             }
-
 
 
         });
@@ -104,9 +105,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,ProductActivity.class);
-                Intent pastIntent = getIntent();
-                String email = pastIntent.getStringExtra("email");
-                i.putExtra("email",email);
                 startActivity(i);
             }
         });
@@ -119,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 if(cursor.getCount() >0){
                     StringBuffer buffer= new StringBuffer();
                     while(cursor.moveToNext()){
-                        buffer.append("Name = ").append(cursor.getString(0)).append(", Price = ").append(cursor.getString(1)).append(", Description = ").append(cursor.getString(2)).append("\n");
+                        buffer.append("Name = ").append(cursor.getString(0)).append(", Price = ").append(cursor.getString(1)).append(", Description = ").append(cursor.getString(2)).append(", Farmer email = ").append(cursor.getString(3)).append("\n");
                     }
                     AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
                     builder.setCancelable(true);

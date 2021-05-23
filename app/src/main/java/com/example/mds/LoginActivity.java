@@ -42,6 +42,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 boolean check = SetValidation();
                 if(check == true){
+                    User user = new User(email.getText().toString());
+                    SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
+                    sessionManagement.saveSession(user);
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     intent.putExtra("email",email.getText().toString());
                     startActivity(intent);
@@ -57,6 +60,17 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
+        String email = sessionManagement.getSession();
+        if(email != null){
+            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     public boolean SetValidation() {

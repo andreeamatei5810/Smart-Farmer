@@ -25,9 +25,9 @@ public class FarmerProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farmer_profile);
-        Intent pastIntent = getIntent();
-        String userEmail = pastIntent.getStringExtra("email");
-        if (userEmail == null) {
+        SessionManagement sessionManagement = new SessionManagement(FarmerProfileActivity.this);
+        String emailUser = sessionManagement.getSession();
+        if (emailUser == null) {
             Toast.makeText(getApplicationContext(), "No user logged in", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(FarmerProfileActivity.this, MainActivity.class);
             startActivity(i);
@@ -59,7 +59,7 @@ public class FarmerProfileActivity extends AppCompatActivity {
                 }
             });
 
-            Cursor cursor = database.getClient(userEmail);
+            Cursor cursor = database.getClient(emailUser);
             cursor.moveToFirst();
             name.setText(cursor.getString(2));
 
@@ -69,7 +69,6 @@ public class FarmerProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(FarmerProfileActivity.this, ChatActivity.class);
-                    intent.putExtra("email", userEmail);
                     /* intent.putExtra("emailReceiver", emailMessage.getText().toString());
                     startActivity(intent); */
                 }

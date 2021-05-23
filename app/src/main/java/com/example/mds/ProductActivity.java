@@ -29,12 +29,14 @@ public class ProductActivity extends AppCompatActivity {
         prodPrice = (EditText) findViewById(R.id.editTextPrice);
         prodDescription = (EditText) findViewById(R.id.editTextDescription);
         addProduct = (Button) findViewById(R.id.confirm);
+        SessionManagement sessionManagement = new SessionManagement(ProductActivity.this);
+        String emailUser = sessionManagement.getSession();
 
         dbHelper = new DBHelper(this);
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check =  dbHelper.insertProduct(prodName.getText().toString(), Integer.parseInt(prodPrice.getText().toString()),prodDescription.getText().toString());
+                check =  dbHelper.insertProduct(prodName.getText().toString(), Integer.parseInt(prodPrice.getText().toString()),prodDescription.getText().toString(),emailUser);
 
                 if(check == true){
                     Toast.makeText(ProductActivity.this, "New Product Inserted", Toast.LENGTH_SHORT).show();

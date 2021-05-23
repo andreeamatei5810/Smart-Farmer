@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -77,7 +78,11 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
             emailError.setError("Invalid email");
             isEmailValid = false;
-        } else  {
+        } else if(dbHelper.getClient(email.getText().toString()).getCount()>0) {
+            emailError.setError("There is already an account with this id");
+            isEmailValid = false;
+        }
+        else{
             isEmailValid = true;
             emailError.setErrorEnabled(false);
         }
@@ -114,7 +119,8 @@ public class RegisterActivity extends AppCompatActivity {
             Boolean check = dbHelper.insertClient(email.getText().toString(),password.getText().toString(),name.getText().toString(),phone.getText().toString(),role);
                 if(check == true){
                     Toast.makeText(RegisterActivity.this, "New Client Inserted", Toast.LENGTH_SHORT).show();
-                    System.out.println(email.getText().toString());
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
                 else{
                     Toast.makeText(RegisterActivity.this, "NOT INSERTED", Toast.LENGTH_SHORT).show();
