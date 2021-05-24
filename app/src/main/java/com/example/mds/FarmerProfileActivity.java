@@ -59,7 +59,7 @@ public class FarmerProfileActivity extends AppCompatActivity {
                 }
             });
 
-            Cursor cursor = database.getClient(emailUser);
+            Cursor cursor = database.getUser(emailUser);
             cursor.moveToFirst();
             name.setText(cursor.getString(2));
 

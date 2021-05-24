@@ -31,7 +31,7 @@ public class NewMessageActivity  extends AppCompatActivity {
         newMessage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String emailReceived = String.valueOf(emailMessage.getText());
-                ArrayList<String> str = database.getClientInfo(emailReceived);
+                ArrayList<String> str = database.getUserInfo(emailReceived);
                 if (str.size() != 6) {
                     Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(NewMessageActivity.this, ChatContactActivity.class);

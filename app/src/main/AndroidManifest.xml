@@ -10,21 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MDS">
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-        <activity android:name=".ClientProfile" />
-        <activity android:name=".ClientEditProfile" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".UserProfileEdit" />
+        <activity android:name=".UserProfile" />
         <activity android:name=".FarmerProfileActivity" />
         <activity android:name="chat.ChatActivity"/>
         <activity android:name="chat.ChatContactActivity"/>
         <activity android:name="chat.NewMessageActivity"/>
         <activity android:name=".UploadActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity">
+        <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

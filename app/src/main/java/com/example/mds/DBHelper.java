@@ -22,14 +22,14 @@ public class DBHelper extends SQLiteOpenHelper {
     Context context;
 
     public DBHelper(Context context) {
-        super(context, "Database6.db", null, 1);
+        super(context, "DatabaseTest.db", null, 1);
         this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
-        DB.execSQL("create Table Client(email TEXT primary key, " +
-                "password TEXT, username TEXT, phoneNumber TEXT, role TEXT, preferences TEXT, privacy TEXT)");
+        DB.execSQL("create Table User(email TEXT primary key, " +
+                "password TEXT, username TEXT, phoneNumber TEXT, role TEXT)");
         DB.execSQL("create Table ChatMessage(idMessage INTEGER primary key AUTOINCREMENT, textMessage TEXT, " +
                 "timeMessage TEXT, emailSender TEXT, emailReceiver TEXT, readMessage TEXT)");
         DB.execSQL("create table Product(productName TEXT" + ",image BLOB,productPrice int, productDescription TEXT)");
@@ -37,13 +37,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists Client");
+        db.execSQL("drop table if exists User");
         db.execSQL("drop table if exists Product");
         db.execSQL("drop table if exists ChatMessage");
 
     }
 
-    public boolean insertClient(String email, String password, String username, String phoneNumber, String role) {
+    public boolean insertUser(String email, String password, String username, String phoneNumber, String role) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
@@ -51,16 +51,14 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("username", username);
         contentValues.put("phoneNumber", phoneNumber);
         contentValues.put("role", role);
-        contentValues.put("preferences", "");
-        contentValues.put("privacy", "public");
-        long result = DB.insert("Client", null, contentValues);
+        long result = DB.insert("User", null, contentValues);
         return result != -1;
     }
 
-    public Cursor getClient(String email) {
+    public Cursor getUser(String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         System.out.println(email);
-        return db.rawQuery("select * from Client where email =?", new String[]{email});
+        return db.rawQuery("select * from User where email =?", new String[]{email});
     }
 
     public Boolean updateUserData(String text) {
@@ -93,42 +91,36 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void deleteUsers() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("delete from client");
+        db.execSQL("delete from User");
     }
 
     public Cursor getUsers() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("select * from Client", null);
+        return db.rawQuery("select * from User", null);
     }
 
-    public void editUserProfile(String oldEmail, String email, String password, String username, String phoneNumber, String preferences,
-                                String privacy) {
+    public void editUserProfile(String email, String newPassword, String newUsername, String newPhoneNumber) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
-        contentValues.put("password", password);
-        contentValues.put("username", username);
-        contentValues.put("phoneNumber", phoneNumber);
-        contentValues.put("preferences", preferences);
-        contentValues.put("privacy", privacy);
-        Cursor cursor = DB.rawQuery("Select * from Client where email = ?", new String[]{oldEmail});
+        contentValues.put("password", newPassword);
+        contentValues.put("username", newUsername);
+        contentValues.put("phoneNumber", newPhoneNumber);
+        Cursor cursor = DB.rawQuery("Select * from User where email = ?", new String[]{email});
         if (cursor.getCount() > 0) {
-            long result = DB.update("Client", contentValues, "email=?", new String[]{oldEmail});
+            long result = DB.update("User", contentValues, "email=?", new String[]{email});
         }
         cursor.close();
     }
 
-    public ArrayList<String> getClientInfo(String email) {
+    public ArrayList<String> getUserInfo(String email) {
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor cursorP = DB.rawQuery("Select password from Client where email = ?", new String[]{email});
-        Cursor cursorU = DB.rawQuery("Select username from Client where email = ?", new String[]{email});
-        Cursor cursorA = DB.rawQuery("Select phoneNumber from Client where email = ?", new String[]{email});
-        Cursor cursorPr = DB.rawQuery("Select preferences from Client where email = ?", new String[]{email});
-        Cursor cursorPy = DB.rawQuery("Select privacy from Client where email = ?", new String[]{email});
+        Cursor cursorP = DB.rawQuery("Select password from User where email = ?", new String[]{email});
+        Cursor cursorU = DB.rawQuery("Select username from User where email = ?", new String[]{email});
+        Cursor cursorA = DB.rawQuery("Select phoneNumber from User where email = ?", new String[]{email});
         ArrayList<String> str = new ArrayList<>();
         str.add(email);
-        if (cursorP.getCount() > 0 && cursorU.getCount() > 0 && cursorA.getCount() > 0 &&
-                cursorPr.getCount() > 0 && cursorPy.getCount() > 0) {
+        if (cursorP.getCount() > 0 && cursorU.getCount() > 0 && cursorA.getCount() > 0) {
             cursorP.moveToFirst();
             int index = cursorP.getColumnIndex("password");
             String password = cursorP.getString(index);
@@ -141,29 +133,19 @@ public class DBHelper extends SQLiteOpenHelper {
             index = cursorA.getColumnIndex("phoneNumber");
             String phoneNumber = cursorA.getString(index);
             str.add(String.valueOf(phoneNumber));
-            cursorPr.moveToFirst();
-            index = cursorPr.getColumnIndex("preferences");
-            String preferences = cursorPr.getString(index);
-            str.add(preferences);
-            cursorPy.moveToFirst();
-            index = cursorPy.getColumnIndex("privacy");
-            String privacy = cursorPy.getString(index);
-            str.add(privacy);
         }
 
         cursorP.close();
         cursorU.close();
         cursorA.close();
-        cursorPr.close();
-        cursorPy.close();
         return str;
     }
 
-    public void deleteClient(String email) {
+    public void deleteUser(String email) {
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor cursor = DB.rawQuery("Select * from Client where email = ?", new String[]{email});
+        Cursor cursor = DB.rawQuery("Select * from User where email = ?", new String[]{email});
         if (cursor.getCount() > 0) {
-            long result = DB.delete("Client", "email=?", new String[]{email});
+            long result = DB.delete("User", "email=?", new String[]{email});
         }
         cursor.close();
 

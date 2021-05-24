@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 boolean check = SetValidation();
-                if(check == true){
+                if(check){
                     User user = new User(email.getText().toString());
                     SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
                     sessionManagement.saveSession(user);
@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (isEmailValid && isPasswordValid) {
             System.out.println(email.getText().toString());
-            Cursor cursor = dbHelper.getClient(email.getText().toString());
+            Cursor cursor = dbHelper.getUser(email.getText().toString());
             if(cursor.getCount()>0){
                 cursor.moveToFirst();
                 if(password.getText().toString().equals(cursor.getString(1))){

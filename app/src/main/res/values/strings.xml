@@ -40,4 +40,7 @@
     <string name="chat">Chat</string>
     <string name="price">Price</string>
     <string name="go_back_to_all_messages">Go back to all messages</string>
+    <string name="profilePhoto"/>
+    <string name="profile_photo">Profile photo</string>
+    <string name="back_to_profile">Back to profile</string>
 </resources>
