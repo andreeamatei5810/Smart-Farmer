@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText imageDetailsET;
     private ImageView objectImageView;
 
-    Button farmerProfile,login,dbButton,deleteUsers, clientProfile,addProduct,dbProd,contacts,logout,upload;
+    Button farmerProfile,login,dbButton,deleteUsers, clientProfile,addProduct,dbProd,contacts,logout,upload,show;
     DBHelper dbHelper;
 
     @Override
@@ -62,6 +62,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+/*
+        show = findViewById(R.id.show);
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ShowImagesActivity.class);
+                startActivity(i);
+            }
+        });
+*/
+
 
         dbHelper = new DBHelper(this);
         dbButton = findViewById(R.id.buttonGetUsers);

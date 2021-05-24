@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.widget.Toast;
 
@@ -22,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
     Context context;
 
     public DBHelper(Context context) {
-        super(context, "DatabaseTest.db", null, 1);
+        super(context, "DatabaseTest1.db", null, 1);
         this.context = context;
     }
 
@@ -255,5 +256,42 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
 
+    }
+
+    public ArrayList<ProductClass> getAllProductsData(){
+        try{
+            SQLiteDatabase SQLDatabase = this.getReadableDatabase();
+            ArrayList<ProductClass> objectModelClassList = new ArrayList<>();
+
+            Cursor objectCursor = SQLDatabase.rawQuery("select * from Product",null);
+            if(objectCursor.getCount()!=0){
+                while(objectCursor.moveToNext()){
+                    String productName = objectCursor.getString(0);
+                    int productPrice = Integer.parseInt(objectCursor.getString(2));
+                    String productDescription = objectCursor.getString(3);
+
+                    byte[] imageBytes = objectCursor.getBlob(1);
+
+                    Bitmap objectBitmap = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+
+                    objectModelClassList.add(new ProductClass(productName,productPrice,productDescription,objectBitmap));
+
+
+
+                }
+                return objectModelClassList;
+
+            }
+            else{
+                Toast.makeText(context,"There are no products in database!",Toast.LENGTH_SHORT).show();
+                return null;
+            }
+
+        }
+        catch(Exception e){
+            Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
+            return null;
+
+        }
     }
 }

@@ -12,6 +12,7 @@
         android:textColor="@android:color/white"
         android:text="Show Images"
         android:id="@+id/showImagesBtn"
+        android:onClick="getData"
         />
 
     <androidx.recyclerview.widget.RecyclerView

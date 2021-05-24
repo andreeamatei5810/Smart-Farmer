@@ -93,4 +93,10 @@ public class UploadActivity extends AppCompatActivity  {
 
         }
     }
+
+    public void moveToShowActivity(View view){
+        Intent i = new Intent(this,ShowImagesActivity.class);
+        startActivity(i);
+
+    }
 }

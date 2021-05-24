@@ -9,10 +9,6 @@ public class ProductClass {
     Bitmap image;
 
 
-    public ProductClass(String prodName, Bitmap image) {
-        this.prodName = prodName;
-        this.image = image;
-    }
 
     public ProductClass(String prodName, int prodPirce, String prodDescription, Bitmap image) {
         this.prodPirce = prodPirce;
