@@ -252,6 +252,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         } catch (Exception e) {
+            Toast.makeText(context,e.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
 
@@ -264,7 +265,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ArrayList<ProductClass> objectModelClassList = new ArrayList<>();
 
             Cursor objectCursor = SQLDatabase.rawQuery("select * from Product",null);
-            if(objectCursor.getCount()!=0){
+            if(objectCursor.getCount()!=-1){
                 while(objectCursor.moveToNext()){
                     String productName = objectCursor.getString(0);
                     int productPrice = Integer.parseInt(objectCursor.getString(2));
@@ -293,5 +294,6 @@ public class DBHelper extends SQLiteOpenHelper {
             return null;
 
         }
+        
     }
 }
