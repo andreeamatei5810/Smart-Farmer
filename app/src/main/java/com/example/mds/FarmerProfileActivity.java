@@ -20,6 +20,7 @@ public class FarmerProfileActivity extends AppCompatActivity {
 
 
     Button buttonChat;
+    //Button rating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,14 @@ public class FarmerProfileActivity extends AppCompatActivity {
                     startActivity(intent); */
                 }
             });
+
+            /*rating = findViewById(R.id.ratingBar);
+            rating.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(FarmerProfileActivity.this, RatingsFragment.class));
+                }
+            });*/
 
         }
     }
