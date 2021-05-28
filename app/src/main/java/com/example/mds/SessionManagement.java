@@ -3,6 +3,8 @@ package com.example.mds;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.mds.model.User;
+
 public class SessionManagement {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;

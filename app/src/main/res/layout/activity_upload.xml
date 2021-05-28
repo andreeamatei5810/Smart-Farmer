@@ -61,17 +61,5 @@
 
         />
 
-    <Button
-        android:id="@+id/buttonShowActivity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonSave"
-        android:layout_marginTop="2dp"
-        android:background="@android:color/holo_green_dark"
-        android:text="Move to show activity"
-        android:textColor="@android:color/white"
-
-        />
-
 
 </RelativeLayout>

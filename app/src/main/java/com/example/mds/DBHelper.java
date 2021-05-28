@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.mds.model.Product;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -23,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
     Context context;
 
     public DBHelper(Context context) {
-        super(context, "DatabaseTest2.db", null, 1);
+        super(context, "DatabaseTest3.db", null, 1);
         this.context = context;
     }
 
@@ -33,7 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "password TEXT, username TEXT, phoneNumber TEXT, role TEXT)");
         DB.execSQL("create Table ChatMessage(idMessage INTEGER primary key AUTOINCREMENT, textMessage TEXT, " +
                 "timeMessage TEXT, emailSender TEXT, emailReceiver TEXT, readMessage TEXT)");
-        DB.execSQL("create table Product(productName TEXT" + ",image BLOB,productPrice int, productDescription TEXT)");
+        DB.execSQL("create table Product(idProduct INTEGER primary key AUTOINCREMENT,farmerId TEXT,productName TEXT" + ",image BLOB,productPrice int, productDescription TEXT)");
     }
 
     @Override
@@ -224,7 +226,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void addProduct(ProductClass objectProductClass) {
+    public void addProduct(Product objectProductClass) {
         try {
             SQLiteDatabase objectSqlLiteDatabase = this.getWritableDatabase();
             Bitmap imageToStoreBitmap = objectProductClass.getImage();
@@ -236,6 +238,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ContentValues objectContentValues = new ContentValues();
 
 
+            objectContentValues.put("farmerId",objectProductClass.getFarmerId());
             objectContentValues.put("productName", objectProductClass.getProdName());
             objectContentValues.put("image", imageInByte);
             objectContentValues.put("productPrice", objectProductClass.getProdPrice());
@@ -259,23 +262,25 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<ProductClass> getAllProductsData(){
+    public ArrayList<Product> getAllProductsData(){
         try{
             SQLiteDatabase SQLDatabase = this.getReadableDatabase();
-            ArrayList<ProductClass> objectModelClassList = new ArrayList<>();
+            ArrayList<Product> objectModelClassList = new ArrayList<>();
 
             Cursor objectCursor = SQLDatabase.rawQuery("select * from Product",null);
             if(objectCursor.getCount()!=-1){
                 while(objectCursor.moveToNext()){
-                    String productName = objectCursor.getString(0);
-                    int productPrice = Integer.parseInt(objectCursor.getString(2));
-                    String productDescription = objectCursor.getString(3);
+                    int prodId = objectCursor.getInt(0);
+                    String productFarmer = objectCursor.getString(1);
+                    String productName = objectCursor.getString(2);
+                    int productPrice = Integer.parseInt(objectCursor.getString(4));
+                    String productDescription = objectCursor.getString(5);
 
-                    byte[] imageBytes = objectCursor.getBlob(1);
+                    byte[] imageBytes = objectCursor.getBlob(3);
 
                     Bitmap objectBitmap = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
 
-                    objectModelClassList.add(new ProductClass(productName,productPrice,productDescription,objectBitmap));
+                    objectModelClassList.add(new Product(productFarmer,prodId,productName,productPrice,productDescription,objectBitmap));
 
 
 
@@ -290,7 +295,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         }
         catch(Exception e){
-            Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
             return null;
 
         }

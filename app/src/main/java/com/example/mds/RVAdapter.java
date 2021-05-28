@@ -5,9 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mds.model.Product;
 
 import java.util.ArrayList;
 
@@ -18,27 +21,39 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolderClass>
 
 
 
-    ArrayList<ProductClass> objectModelClassList;
+    ArrayList<Product> objectModelClassList;
+    OnItemListener onItemListener;
 
-    public RVAdapter(ArrayList<ProductClass> objectModelClassList) {
+
+    public RVAdapter(ArrayList<Product> objectModelClassList, OnItemListener onItemListener) {
         this.objectModelClassList = objectModelClassList;
+        this.onItemListener = onItemListener;
     }
 
     @NonNull
     @Override
     public RVViewHolderClass onCreateViewHolder(@NonNull  ViewGroup viewgroup, int i) {
-        return new RVViewHolderClass(LayoutInflater.from(viewgroup.getContext())
-                .inflate(R.layout.single_row,viewgroup,false));
+        View view = LayoutInflater.from(viewgroup.getContext())
+                .inflate(R.layout.single_row,viewgroup,false);
+        return new RVViewHolderClass(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull  RVAdapter.RVViewHolderClass rvViewHolderClass, int i) {
-        ProductClass objectProductClass = objectModelClassList.get(i);
+        Product objectProductClass = objectModelClassList.get(i);
 
-        rvViewHolderClass.imageNameTV.setText(objectProductClass.getProdName());
-        rvViewHolderClass.imageNameTV1.setText(String.valueOf(objectProductClass.getProdPrice()));
-        rvViewHolderClass.imageNameTV2.setText(objectProductClass.getProdDescription());
+        rvViewHolderClass.prodName.setText(objectProductClass.getProdName());
+        String price = String.valueOf(objectProductClass.getProdPrice()) + " $";
+        rvViewHolderClass.prodPrice.setText(price);
+        //rvViewHolderClass.prodDesc.setText("Pret: " +objectProductClass.getProdDescription());
         rvViewHolderClass.objectImageView.setImageBitmap(objectProductClass.getImage());
+
+        rvViewHolderClass.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemListener.onItemClick(objectModelClassList.get(i));
+            }
+        });
     }
 
     @Override
@@ -48,16 +63,19 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolderClass>
 
     public static class RVViewHolderClass extends RecyclerView.ViewHolder {
 
-        TextView imageNameTV, imageNameTV1, imageNameTV2;
+        TextView prodName, prodPrice, prodDesc;
         ImageView objectImageView;
 
         public RVViewHolderClass(@NonNull View itemView) {
             super(itemView);
-            imageNameTV = itemView.findViewById(R.id.sr_imageDetailsTV);
-            imageNameTV1 = itemView.findViewById(R.id.sr_imageDetailsTV1);
-            imageNameTV2 = itemView.findViewById(R.id.sr_imageDetailsTV2);
-
-            objectImageView = itemView.findViewById(R.id.sr_imageTV);
+            prodName = itemView.findViewById(R.id.productName);
+            prodPrice = itemView.findViewById(R.id.productPrice);
+            //prodDesc = itemView.findViewById(R.id.productDesc);
+            objectImageView = itemView.findViewById(R.id.productImage);
         }
+    }
+
+    public interface OnItemListener{
+        void onItemClick(Product product);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.mds;
+package com.example.mds.model;
 
 public class User {
     String email;

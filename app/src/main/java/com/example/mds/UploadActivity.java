@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mds.model.Product;
+
 public class UploadActivity extends AppCompatActivity  {
     String name,description;
     int price;
@@ -41,15 +43,6 @@ public class UploadActivity extends AppCompatActivity  {
             Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
 
         }
-        goToShow = findViewById(R.id.buttonShowActivity);
-        goToShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("Am ajuns pe aici");
-                Intent i = new Intent(UploadActivity.this,ShowPhotosActivity.class);
-                startActivity(i);
-            }
-        });
 
     }
 
@@ -94,7 +87,9 @@ public class UploadActivity extends AppCompatActivity  {
                 name = productName.getText().toString();
                 price= Integer.parseInt(productPrice.getText().toString());
                 description=productDescription.getText().toString();
-                dbHelper.addProduct(new ProductClass(name,price,description, imageToStore));
+                SessionManagement sessionManagement = new SessionManagement(UploadActivity.this);
+                String emailUser = sessionManagement.getSession();
+                dbHelper.addProduct(new Product(emailUser,name,price,description, imageToStore));
             }
 
             else {

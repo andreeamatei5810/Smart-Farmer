@@ -1,51 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
+    <androidx.cardview.widget.CardView
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_margin="8dp"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:src="@drawable/mood" />
+    <LinearLayout
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Product name"
-        android:background="@android:color/holo_orange_dark"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:paddingLeft="10dp"
-        android:id="@+id/sr_imageDetailsTV"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        android:id="@+id/productName"
+        android:layout_margin="8dp"
+        android:textStyle="bold"
 
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Product price"
-        android:background="@android:color/holo_orange_dark"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:paddingLeft="10dp"
-        android:id="@+id/sr_imageDetailsTV1"
-        android:layout_below="@+id/sr_imageDetailsTV"
+        android:textColor="@android:color/black"
+        android:layout_margin="8dp"
+        android:textSize="17sp"
+        android:id="@+id/productPrice"
 
         />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Product details"
-        android:background="@android:color/holo_orange_dark"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:paddingLeft="10dp"
-        android:id="@+id/sr_imageDetailsTV2"
-        android:layout_below="@+id/sr_imageDetailsTV1"
+    </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-        />
-    <ImageView
 
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:scaleType="centerCrop"
-        android:id="@+id/sr_imageTV"
-        android:layout_below="@+id/sr_imageDetailsTV1"
-        android:src="@drawable/mood"
-        />
-
-</RelativeLayout>
+</LinearLayout>
