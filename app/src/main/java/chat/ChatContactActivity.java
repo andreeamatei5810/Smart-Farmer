@@ -1,14 +1,21 @@
 package chat;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mds.ClientHomeActivity;
 import com.example.mds.DBHelper;
+import com.example.mds.FarmerHomeActivity;
+import com.example.mds.LoginActivity;
 import com.example.mds.MainActivity;
 import com.example.mds.R;
+import com.example.mds.SessionManagement;
+import com.example.mds.UserProfile;
 
 import java.util.ArrayList;
 
@@ -24,10 +31,11 @@ public class ChatContactActivity extends AppCompatActivity{
         setContentView(R.layout.activity_chat_contact);
         database = new DBHelper(this);
         Intent pastIntent = getIntent();
-        String emailUser = pastIntent.getStringExtra("email");
+        SessionManagement sessionManagement = new SessionManagement(ChatContactActivity.this);
+        String emailUser = sessionManagement.getSession();
         if (emailUser == null) {
             Toast.makeText(getApplicationContext(), "No user logged in", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(ChatContactActivity.this, MainActivity.class);
+            Intent i = new Intent(ChatContactActivity.this, LoginActivity.class);
             startActivity(i);
         } else {
             ArrayList<String> allContacts = database.getContacts(emailUser);
@@ -56,7 +64,6 @@ public class ChatContactActivity extends AppCompatActivity{
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(ChatContactActivity.this, ChatActivity.class);
-                            intent.putExtra("email", emailUser);
                             intent.putExtra("emailReceiver", allContacts.get(finalI));
                             startActivity(intent);
                         }
@@ -69,7 +76,6 @@ public class ChatContactActivity extends AppCompatActivity{
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(), NewMessageActivity.class);
-                    intent.putExtra("email", emailUser);
                     startActivity(intent);
                 }
             });
@@ -78,9 +84,15 @@ public class ChatContactActivity extends AppCompatActivity{
             backToMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(ChatContactActivity.this, MainActivity.class);
-                    intent.putExtra("email", emailUser);
-                    startActivity(intent);
+                    Cursor cursor = database.getUser(emailUser);
+                    cursor.moveToFirst();
+                    if(cursor.getString(4).equals("client")){
+                        Intent intent = new Intent(ChatContactActivity.this, ClientHomeActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(ChatContactActivity.this, FarmerHomeActivity.class);
+                        startActivity(intent);
+                    }
                 }
             });
         }

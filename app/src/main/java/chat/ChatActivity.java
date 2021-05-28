@@ -1,15 +1,20 @@
 package chat;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mds.DBHelper;
 import com.example.mds.R;
+import com.example.mds.SessionManagement;
+import com.example.mds.UserProfile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,7 +34,8 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         database = new DBHelper(this);
         Intent pastIntent = getIntent();
-        String emailUser = pastIntent.getStringExtra("email");
+        SessionManagement sessionManagement = new SessionManagement(ChatActivity.this);
+        String emailUser = sessionManagement.getSession();
         String emailReceiver = pastIntent.getStringExtra("emailReceiver");
         database.readAllMessages(emailUser);
         ArrayList<String> allMessages = database.getMessages(emailUser, emailReceiver);
@@ -40,13 +46,13 @@ public class ChatActivity extends AppCompatActivity {
         newMessage = findViewById(R.id.messageToSent);
 
         sendImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 String messageSend = String.valueOf(newMessage.getText());
                 if (!messageSend.equals("")) {
                     database.insertMessage(messageSend, emailUser, emailReceiver);
                     Intent intent = new Intent(ChatActivity.this, ChatActivity.class);
-                    intent.putExtra("email", emailUser);
                     intent.putExtra("emailReceiver", emailReceiver);
                     startActivity(intent);
                 } else {
@@ -60,7 +66,6 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChatActivity.this, ChatContactActivity.class);
-                intent.putExtra("email", emailUser);
                 startActivity(intent);
                 }
         });

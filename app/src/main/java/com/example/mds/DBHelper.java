@@ -23,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
     Context context;
 
     public DBHelper(Context context) {
-        super(context, "DatabaseTest1.db", null, 1);
+        super(context, "DatabaseTest2.db", null, 1);
         this.context = context;
     }
 
@@ -238,7 +238,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             objectContentValues.put("productName", objectProductClass.getProdName());
             objectContentValues.put("image", imageInByte);
-            objectContentValues.put("productPrice", objectProductClass.getProdPirce());
+            objectContentValues.put("productPrice", objectProductClass.getProdPrice());
             objectContentValues.put("productDescription", objectProductClass.getProdDescription());
 
             long checkQueryRuns = objectSqlLiteDatabase.insert("Product", null, objectContentValues);

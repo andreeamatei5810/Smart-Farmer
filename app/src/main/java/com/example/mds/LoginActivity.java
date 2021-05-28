@@ -43,11 +43,17 @@ public class LoginActivity extends AppCompatActivity {
                 boolean check = SetValidation();
                 if(check){
                     User user = new User(email.getText().toString());
+                    Cursor cursor = dbHelper.getUser(email.getText().toString());
+                    cursor.moveToFirst();
                     SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
                     sessionManagement.saveSession(user);
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    intent.putExtra("email",email.getText().toString());
-                    startActivity(intent);
+                    if(cursor.getString(4).equals("client")){
+                        Intent intent = new Intent(LoginActivity.this,ClientHomeActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(LoginActivity.this, FarmerHomeActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -67,9 +73,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
         String email = sessionManagement.getSession();
-        if(email != null){
-            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-            startActivity(intent);
+        if (email != null) {
+            Cursor cursor = dbHelper.getUser(email);
+            if(cursor.getCount()!=0){
+            cursor.moveToFirst();
+            if (cursor.getString(4).equals("client")) {
+                Intent intent = new Intent(LoginActivity.this, ClientHomeActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(LoginActivity.this, FarmerHomeActivity.class);
+                startActivity(intent);
+            }
+            }
         }
     }
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
+    android:background="@drawable/gradient_green_background"
     android:padding="16dp"
     android:scrollbarThumbVertical="@null"
     tools:context=".RegisterActivity">
@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="gigi@gmail.com"
+                    android:hint="Email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:paddingStart="5dp"
@@ -76,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="0712345678"
+                    android:hint="Phone Number"
                     android:maxLength="12"
                     android:inputType="number"
                     android:maxLines="1"
@@ -98,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:inputType="textPassword"
+                    android:hint="Password"
                     android:maxLines="1"
                     android:paddingStart="5dp"
                     android:singleLine="true"/>
@@ -123,15 +124,19 @@
                     android:text="Farmer" />
             </RadioGroup>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/register"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="20dp"
-                android:background="@drawable/button_gradient"
+                android:background="@color/purple_icon"
                 android:text="Register"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:shadowColor="#000000"
+                android:shadowDx="1.9"
+                android:shadowDy="1.9"
+                android:shadowRadius="1.6"/>
 
             <TextView
                 android:id="@+id/login"
@@ -141,7 +146,7 @@
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:text="Go to login"
-                android:textColor="#7A52BA"
+                android:textColor="@color/green_end"
                 android:textSize="16sp"/>
 
         </LinearLayout>

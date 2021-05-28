@@ -4,14 +4,14 @@ import android.graphics.Bitmap;
 
 public class ProductClass {
     String prodName;
-    int prodPirce;
+    int prodPrice;
     String prodDescription;
     Bitmap image;
 
 
 
-    public ProductClass(String prodName, int prodPirce, String prodDescription, Bitmap image) {
-        this.prodPirce = prodPirce;
+    public ProductClass(String prodName, int prodPrice, String prodDescription, Bitmap image) {
+        this.prodPrice = prodPrice;
         this.prodDescription = prodDescription;
         this.prodName = prodName;
         this.image = image;
@@ -25,12 +25,12 @@ public class ProductClass {
         this.prodName = prodName;
     }
 
-    public int getProdPirce() {
-        return prodPirce;
+    public int getProdPrice() {
+        return prodPrice;
     }
 
-    public void setProdPirce(int prodPirce) {
-        this.prodPirce = prodPirce;
+    public void setProdPrice(int prodPrice) {
+        this.prodPrice = prodPrice;
     }
 
     public String getProdDescription() {

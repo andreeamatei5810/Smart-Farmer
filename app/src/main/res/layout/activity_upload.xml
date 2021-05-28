@@ -12,33 +12,37 @@
         android:layout_height="wrap_content"
         android:hint="Enter product name!"
         android:maxLength="25"
-        android:textColor="@android:color/holo_green_dark"
-        android:textColorHint="@android:color/holo_green_dark" />
+        android:textColor="@color/purple_icon"
+        android:textColorHint="@color/purple_icon" />
     <EditText
         android:id="@+id/prodP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:hint="Enter product price!"
         android:maxLength="25"
         android:layout_below="@+id/prodN"
-        android:textColor="@android:color/holo_green_dark"
-        android:textColorHint="@android:color/holo_green_dark" />
+        android:textColor="@color/purple_icon"
+        android:textColorHint="@color/purple_icon" />
     <EditText
         android:id="@+id/prodD"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:hint="Enter product description!"
         android:maxLength="25"
         android:layout_below="@+id/prodP"
-        android:textColor="@android:color/holo_green_dark"
-        android:textColorHint="@android:color/holo_green_dark" />
+        android:textColor="@color/purple_icon"
+        android:textColorHint="@color/purple_icon"/>
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
         android:id="@+id/image"
         android:layout_below="@+id/prodD"
-        android:src="@drawable/mood"
+        android:src="@drawable/ic_photo_add"
         android:scaleType="centerCrop"
         android:onClick="chooseImage"
         />
@@ -47,7 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Product"
-        android:id="@+id/saveBtn"
+        android:layout_marginTop="35dp"
+        android:id="@+id/buttonSave"
         android:layout_below="@+id/image"
         android:background="@android:color/holo_green_dark"
         android:textColor="@android:color/white"
@@ -55,16 +60,16 @@
 
 
         />
+
     <Button
+        android:id="@+id/buttonShowActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/moveToShowActivity"
-        android:layout_below="@+id/saveBtn"
-        android:background="@android:color/holo_green_dark"
-        android:textColor="@android:color/white"
-        android:text="Move to show activity"
+        android:layout_below="@+id/buttonSave"
         android:layout_marginTop="2dp"
-        android:onClick="moveToShowActivity"
+        android:background="@android:color/holo_green_dark"
+        android:text="Move to show activity"
+        android:textColor="@android:color/white"
 
         />
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MDS</string>
+    <string name="app_name">Smart Farmer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="your_profile">Your profile</string>
@@ -40,7 +40,7 @@
     <string name="chat">Chat</string>
     <string name="price">Price</string>
     <string name="go_back_to_all_messages">Go back to all messages</string>
-    <string name="profilePhoto"/>
+    <string name="profilePhoto" />
     <string name="profile_photo">Profile photo</string>
     <string name="back_to_profile">Back to profile</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.mds;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,13 +28,12 @@ public class UserProfile extends AppCompatActivity {
         database = new DBHelper(this);
         SessionManagement sessionManagement = new SessionManagement(UserProfile.this);
         String emailUser = sessionManagement.getSession();
-        System.out.println("aici"+emailUser);
+        System.out.println("aici" + emailUser);
         if (emailUser == null) {
             Toast.makeText(getApplicationContext(), "No user logged in", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(UserProfile.this, MainActivity.class);
-                startActivity(i);
-            }
-        else {
+            startActivity(i);
+        } else {
             ArrayList<String> str = database.getUserInfo(emailUser);
             email = findViewById(R.id.seeEmail);
             username = findViewById(R.id.seeUsername);
@@ -54,20 +54,24 @@ public class UserProfile extends AppCompatActivity {
             editButton = findViewById(R.id.editAccount);
             editButton.setOnClickListener(v -> {
                 Intent i = new Intent(UserProfile.this, UserProfileEdit.class);
-                i.putExtra("email",emailUser);
                 startActivity(i);
             });
 
             backMain = findViewById(R.id.backMain);
             backMain.setOnClickListener(v -> {
-                Intent i = new Intent(UserProfile.this, MainActivity.class);
-                i.putExtra("email",emailUser);
-                startActivity(i);
+                Cursor cursor = database.getUser(email);
+                if (cursor.getCount() != 0) {
+                    cursor.moveToFirst();
+                    if (cursor.getString(4).equals("client")) {
+                        Intent intent = new Intent(UserProfile.this, ClientHomeActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(UserProfile.this, FarmerHomeActivity.class);
+                        startActivity(intent);
+                    }
+                }
             });
 
-            }
         }
-
-
     }
-
+}

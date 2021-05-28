@@ -36,9 +36,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVViewHolderClass>
         ProductClass objectProductClass = objectModelClassList.get(i);
 
         rvViewHolderClass.imageNameTV.setText(objectProductClass.getProdName());
-        rvViewHolderClass.imageNameTV1.setText(objectProductClass.getProdPirce());
+        rvViewHolderClass.imageNameTV1.setText(String.valueOf(objectProductClass.getProdPrice()));
         rvViewHolderClass.imageNameTV2.setText(objectProductClass.getProdDescription());
-
         rvViewHolderClass.objectImageView.setImageBitmap(objectProductClass.getImage());
     }
 

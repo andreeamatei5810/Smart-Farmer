@@ -9,24 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MDS">
+        <activity android:name=".ShowPhotosActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".UserProfileEdit" />
-        <activity android:name=".UserProfile" />
-        <activity android:name=".FarmerProfileActivity" />
-        <activity android:name="chat.ChatActivity"/>
-        <activity android:name="chat.ChatContactActivity"/>
-        <activity android:name="chat.NewMessageActivity"/>
-        <activity android:name=".UploadActivity" />
-        <activity android:name=".MainActivity">
-
-
-        <intent-filter>
+        <activity android:name=".LoginActivity">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".FarmerProfileActivity" />
+        <activity android:name=".UserProfile" />
+        <activity android:name=".UserProfileEdit" />
+        <activity android:name="chat.ChatActivity" />
+        <activity android:name=".RatingActivity" />
+        <activity android:name="chat.ChatContactActivity" />
+        <activity android:name="chat.NewMessageActivity" />
+        <activity android:name=".FarmerHomeActivity" />
+        <activity android:name=".ClientHomeActivity" />
+        <activity android:name=".UploadActivity" />
+        <activity android:name=".ShowImagesActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

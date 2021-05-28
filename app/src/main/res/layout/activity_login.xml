@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:padding="16dp"
+    android:background="@drawable/gradient_green_background"
     tools:context=".LoginActivity">
 
     <RelativeLayout
@@ -69,15 +70,19 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/login"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="20dp"
-                    android:background="@drawable/button_gradient"
+                    android:background="@color/purple_icon"
                     android:text="Login"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:shadowColor="#000000"
+                    android:shadowDx="1.8"
+                    android:shadowDy="1.8"
+                    android:shadowRadius="1.6"/>
 
                 <TextView
                     android:id="@+id/register"
@@ -86,7 +91,7 @@
                     android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:text="Register"
-                    android:textColor="#1360AC"
+                    android:textColor="@color/green_end"
                     android:textSize="16sp"/>
 
             </LinearLayout>
