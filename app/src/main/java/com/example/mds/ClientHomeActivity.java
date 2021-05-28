@@ -47,7 +47,7 @@ public class ClientHomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        
+
     }
 
 
