@@ -28,7 +28,6 @@ public class UserProfile extends AppCompatActivity {
         database = new DBHelper(this);
         SessionManagement sessionManagement = new SessionManagement(UserProfile.this);
         String emailUser = sessionManagement.getSession();
-        System.out.println("aici" + emailUser);
         if (emailUser == null) {
             Toast.makeText(getApplicationContext(), "No user logged in", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(UserProfile.this, MainActivity.class);

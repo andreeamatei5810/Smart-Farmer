@@ -43,4 +43,8 @@
     <string name="profilePhoto" />
     <string name="profile_photo">Profile photo</string>
     <string name="back_to_profile">Back to profile</string>
+    <string name="product_image">Product image</string>
+    <string name="description">Description:</string>
+    <string name="farmer">Farmer:</string>
+    <string name="button">Button</string>
 </resources>

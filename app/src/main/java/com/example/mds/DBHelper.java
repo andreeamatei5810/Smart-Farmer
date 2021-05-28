@@ -258,8 +258,6 @@ public class DBHelper extends SQLiteOpenHelper {
             Toast.makeText(context,e.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
-
-
     }
 
     public ArrayList<Product> getAllProductsData(){
@@ -281,23 +279,86 @@ public class DBHelper extends SQLiteOpenHelper {
                     Bitmap objectBitmap = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
 
                     objectModelClassList.add(new Product(productFarmer,prodId,productName,productPrice,productDescription,objectBitmap));
-
-
-
                 }
                 return objectModelClassList;
-
             }
             else{
                 Toast.makeText(context,"There are no products in database!",Toast.LENGTH_SHORT).show();
                 return null;
             }
-
         }
         catch(Exception e){
             return null;
+        }
+    }
+
+    public Product getProductById(int id){
+        try{
+            SQLiteDatabase SQLDatabase = this.getReadableDatabase();
+            Cursor objectCursor = SQLDatabase.rawQuery("select * from Product where idProduct=?", new String[]{String.valueOf(id)});
+            if(objectCursor.getCount()!=-1 && objectCursor.moveToNext()){
+                int prodId = objectCursor.getInt(0);
+                String productFarmer = objectCursor.getString(1);
+                String productName = objectCursor.getString(2);
+                int productPrice = Integer.parseInt(objectCursor.getString(4));
+                String productDescription = objectCursor.getString(5);
+                byte[] imageBytes = objectCursor.getBlob(3);
+                Bitmap objectBitmap = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+                return new Product(productFarmer,prodId,productName,productPrice,productDescription,objectBitmap);
+            }
+            else{
+                Toast.makeText(context,"There are no products in database!",Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
+    public void deleteProduct(int id) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor cursor = DB.rawQuery("select * from Product where idProduct=?", new String[]{String.valueOf(id)});
+        if (cursor.getCount() > 0) {
+            long result = DB.delete("Product", "idProduct=?", new String[]{String.valueOf(id)});
+        }
+        cursor.close();
+
+    }
+
+    public void editProduct(Product objectProductClass, int id) {
+        try {
+            SQLiteDatabase objectSqlLiteDatabase = this.getWritableDatabase();
+            Bitmap imageToStoreBitmap = objectProductClass.getImage();
+
+            objectByteArrayOutputStream = new ByteArrayOutputStream();
+            imageToStoreBitmap.compress(Bitmap.CompressFormat.JPEG, 100, objectByteArrayOutputStream);
+            imageInByte = objectByteArrayOutputStream.toByteArray();
+
+            ContentValues objectContentValues = new ContentValues();
+
+
+            objectContentValues.put("farmerId",objectProductClass.getFarmerId());
+            objectContentValues.put("productName", objectProductClass.getProdName());
+            objectContentValues.put("image", imageInByte);
+            objectContentValues.put("productPrice", objectProductClass.getProdPrice());
+            objectContentValues.put("productDescription", objectProductClass.getProdDescription());
+
+            long checkQueryRuns = objectSqlLiteDatabase.update("Product", objectContentValues,"idProduct = ?", new String[]{String.valueOf(id)});
+            if (checkQueryRuns != -1) {
+                Toast.makeText(context, "Your product has been successfully updated!", Toast.LENGTH_SHORT).show();
+                objectSqlLiteDatabase.close();
+
+            } else {
+                Toast.makeText(context, "Did not work", Toast.LENGTH_SHORT).show();
+            }
+
+
+        } catch (Exception e) {
+            Toast.makeText(context,e.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
-        
+
+
     }
 }

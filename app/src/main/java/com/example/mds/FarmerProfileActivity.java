@@ -86,6 +86,7 @@ public class FarmerProfileActivity extends AppCompatActivity {
                 }
             });*/
 
+
         }
     }
 }

@@ -24,7 +24,7 @@ public class UploadActivity extends AppCompatActivity  {
     private static final int PICK_IMAGE_REQUEST=100;
     private Uri imageFilePath;
     private Bitmap imageToStore;
-    private Button goToShow;
+    private Button goToShow, edit;
     DBHelper dbHelper;
 
     protected void onCreate(Bundle savedInstanceState){
@@ -37,6 +37,8 @@ public class UploadActivity extends AppCompatActivity  {
             objectImageView = findViewById(R.id.image);
 
             dbHelper = new DBHelper(this);
+            edit = findViewById(R.id.buttonSave);
+            edit.setText("Add product");
 
         }
         catch(Exception e){
@@ -90,6 +92,7 @@ public class UploadActivity extends AppCompatActivity  {
                 SessionManagement sessionManagement = new SessionManagement(UploadActivity.this);
                 String emailUser = sessionManagement.getSession();
                 dbHelper.addProduct(new Product(emailUser,name,price,description, imageToStore));
+
             }
 
             else {

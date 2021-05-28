@@ -11,7 +11,7 @@ import chat.ChatContactActivity;
 
 public class FarmerHomeActivity extends AppCompatActivity {
 
-    Button farmerProfile,addProduct,logout,contacts;
+    Button farmerProfile,addProduct,logout,contacts, farmerAccount;
     DBHelper dbHelper;
 
     @Override
@@ -53,6 +53,15 @@ public class FarmerHomeActivity extends AppCompatActivity {
                 SessionManagement sessionManagement = new SessionManagement(FarmerHomeActivity.this);
                 sessionManagement.removeSession();
                 Intent i = new Intent(FarmerHomeActivity.this, LoginActivity.class);
+                startActivity(i);
+            }
+        });
+
+        farmerAccount = findViewById(R.id.buttonAccount);
+        farmerAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FarmerHomeActivity.this,UserProfile.class);
                 startActivity(i);
             }
         });
