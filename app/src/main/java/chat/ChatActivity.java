@@ -3,18 +3,13 @@ package chat;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.mds.DBHelper;
-import com.example.mds.R;
-import com.example.mds.SessionManagement;
-import com.example.mds.UserProfile;
+import com.example.mds.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -102,6 +97,23 @@ public class ChatActivity extends AppCompatActivity {
         System.out.println(listTypeChats);
         ChatAdapter customAdapter = new ChatAdapter(this, R.id.text, listTypeChats);
         listOfMessages.setAdapter(customAdapter);
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.home) {
+            Intent intent = new Intent(getApplicationContext(), GoHome.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

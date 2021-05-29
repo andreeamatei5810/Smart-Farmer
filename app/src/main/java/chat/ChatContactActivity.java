@@ -4,18 +4,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mds.ClientHomeActivity;
-import com.example.mds.DBHelper;
-import com.example.mds.FarmerHomeActivity;
-import com.example.mds.LoginActivity;
-import com.example.mds.MainActivity;
-import com.example.mds.R;
-import com.example.mds.SessionManagement;
-import com.example.mds.UserProfile;
+import com.example.mds.*;
 
 import java.util.ArrayList;
 
@@ -89,5 +84,22 @@ public class ChatContactActivity extends AppCompatActivity{
                 }
             });
         }
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.home) {
+            Intent intent = new Intent(getApplicationContext(), GoHome.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.mds;
 
 import android.database.Cursor;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -89,7 +91,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
 
         btn2.setOnClickListener(v -> {
-            if(btn2.getText().equals("Back to products")){
+            if(btn2.getText().equals("See products")){
                 Intent intent1 = new Intent(ProductDetailsActivity.this, FeedActivity.class);
                 startActivity(intent1);
             }
@@ -100,5 +102,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.home) {
+            Intent intent = new Intent(getApplicationContext(), GoHome.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

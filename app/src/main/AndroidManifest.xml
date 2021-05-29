@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MDS">
-        <activity android:name=".FeedActivity"></activity>
+        <activity android:name=".FeedActivity"/>
         <activity android:name=".ProductDetailsActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
@@ -24,6 +24,7 @@
         <activity android:name=".UserProfileEdit" />
         <activity android:name="chat.ChatActivity" />
         <activity android:name=".RatingActivity" />
+        <activity android:name=".GoHome" />
         <activity android:name="chat.ChatContactActivity" />
         <activity android:name=".FarmerHomeActivity" />
         <activity android:name=".ShopCart" />
