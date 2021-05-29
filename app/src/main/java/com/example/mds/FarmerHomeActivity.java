@@ -19,11 +19,15 @@ public class FarmerHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farmer_home);
 
+        SessionManagement sessionManagement = new SessionManagement(FarmerHomeActivity.this);
+        String emailUserLog = sessionManagement.getSession();
+
         farmerProfile = findViewById(R.id.buttonProfile);
         farmerProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(FarmerHomeActivity.this,FarmerProfileActivity.class);
+                i.putExtra("emailFarmer", emailUserLog);
                 startActivity(i);
             }
         });

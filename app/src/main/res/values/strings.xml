@@ -47,4 +47,11 @@
     <string name="description">Description:</string>
     <string name="farmer">Farmer:</string>
     <string name="button">Button</string>
+    <string name="one_time">One time</string>
+    <string name="weekly">Weekly</string>
+    <string name="daily">Daily</string>
+    <string name="monthly">Monthly</string>
+    <string name="choose_the_type_of_subscription_for_the_product">Choose the type of subscription for the product:
+    </string>
+    <string name="add_to_cart">Add to Cart</string>
 </resources>

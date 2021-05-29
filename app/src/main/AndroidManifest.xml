@@ -25,7 +25,6 @@
         <activity android:name="chat.ChatActivity" />
         <activity android:name=".RatingActivity" />
         <activity android:name="chat.ChatContactActivity" />
-        <activity android:name="chat.NewMessageActivity" />
         <activity android:name=".FarmerHomeActivity" />
         <activity android:name=".ShopCart" />
         <activity android:name=".EditProduct" />

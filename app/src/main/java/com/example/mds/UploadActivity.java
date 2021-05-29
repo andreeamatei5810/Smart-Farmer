@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import chat.ChatActivity;
 import com.example.mds.model.Product;
 
 public class UploadActivity extends AppCompatActivity  {
@@ -92,7 +93,8 @@ public class UploadActivity extends AppCompatActivity  {
                 SessionManagement sessionManagement = new SessionManagement(UploadActivity.this);
                 String emailUser = sessionManagement.getSession();
                 dbHelper.addProduct(new Product(emailUser,name,price,description, imageToStore));
-
+                Intent intent = new Intent(UploadActivity.this, FarmerHomeActivity.class);
+                startActivity(intent);
             }
 
             else {

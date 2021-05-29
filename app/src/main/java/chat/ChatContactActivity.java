@@ -71,14 +71,7 @@ public class ChatContactActivity extends AppCompatActivity{
                     cl.addView(textView);
                 }
             }
-            newMessageButton = findViewById(R.id.newMessage);
-            newMessageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), NewMessageActivity.class);
-                    startActivity(intent);
-                }
-            });
+
 
             backToMain = findViewById(R.id.backToMain);
             backToMain.setOnClickListener(new View.OnClickListener() {

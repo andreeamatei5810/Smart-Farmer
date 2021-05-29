@@ -25,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
     Context context;
 
     public DBHelper(Context context) {
-        super(context, "DatabaseTest3.db", null, 1);
+        super(context, "Database.db", null, 1);
         this.context = context;
     }
 
@@ -36,6 +36,9 @@ public class DBHelper extends SQLiteOpenHelper {
         DB.execSQL("create Table ChatMessage(idMessage INTEGER primary key AUTOINCREMENT, textMessage TEXT, " +
                 "timeMessage TEXT, emailSender TEXT, emailReceiver TEXT, readMessage TEXT)");
         DB.execSQL("create table Product(idProduct INTEGER primary key AUTOINCREMENT,farmerId TEXT,productName TEXT" + ",image BLOB,productPrice int, productDescription TEXT)");
+        DB.execSQL("create table ShoppingCart(idElementInCart INTEGER primary key AUTOINCREMENT,farmerEmail TEXT, clientEmail TEXT," +
+                "idProduct INTEGER, purchaseType TEXT)");
+
     }
 
     @Override
@@ -43,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists User");
         db.execSQL("drop table if exists Product");
         db.execSQL("drop table if exists ChatMessage");
-
+        db.execSQL("drop table if exists ShoppingCart");
     }
 
     public boolean insertUser(String email, String password, String username, String phoneNumber, String role) {
@@ -338,13 +341,13 @@ public class DBHelper extends SQLiteOpenHelper {
             ContentValues objectContentValues = new ContentValues();
 
 
-            objectContentValues.put("farmerId",objectProductClass.getFarmerId());
+            objectContentValues.put("farmerId", objectProductClass.getFarmerId());
             objectContentValues.put("productName", objectProductClass.getProdName());
             objectContentValues.put("image", imageInByte);
             objectContentValues.put("productPrice", objectProductClass.getProdPrice());
             objectContentValues.put("productDescription", objectProductClass.getProdDescription());
 
-            long checkQueryRuns = objectSqlLiteDatabase.update("Product", objectContentValues,"idProduct = ?", new String[]{String.valueOf(id)});
+            long checkQueryRuns = objectSqlLiteDatabase.update("Product", objectContentValues, "idProduct = ?", new String[]{String.valueOf(id)});
             if (checkQueryRuns != -1) {
                 Toast.makeText(context, "Your product has been successfully updated!", Toast.LENGTH_SHORT).show();
                 objectSqlLiteDatabase.close();
@@ -355,10 +358,51 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         } catch (Exception e) {
-            Toast.makeText(context,e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
-
-
     }
+
+    public boolean insertProductInShopCart(String farmerEmail, String clientEmail, int idProduct, String purchaseType) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("farmerEmail", farmerEmail);
+        contentValues.put("clientEmail", clientEmail);
+        contentValues.put("idProduct", idProduct);
+        contentValues.put("purchaseType", purchaseType);
+        long result = DB.insert("ShoppingCart", null, contentValues);
+        if (result != -1) {
+            Toast.makeText(context, "Your product has been successfully added to the shop cart!", Toast.LENGTH_SHORT).show();
+            DB.close();
+        } else {
+            Toast.makeText(context, "Did not work", Toast.LENGTH_SHORT).show();
+        }
+        return result != -1;
+    }
+
+
+    public ArrayList<Product> getAllProductsFromShopCart(String clientEmail){
+        try{
+            SQLiteDatabase SQLDatabase = this.getReadableDatabase();
+            ArrayList<Product> objectModelClassList = new ArrayList<>();
+
+            Cursor objectCursor = SQLDatabase.rawQuery("select * from ShoppingCart where clientEmail=?", new String[]{clientEmail});
+            if(objectCursor.getCount()!=-1){
+                while(objectCursor.moveToNext()) {
+                    int prodId = objectCursor.getInt(3);
+                    Product product = getProductById(prodId);
+                    objectModelClassList.add(product);
+                }
+                return objectModelClassList;
+            }
+            else{
+                Toast.makeText(context,"There are no products in shopping cart!",Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
 }

@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -14,6 +12,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import chat.ChatActivity;
+import chat.ChatContactActivity;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
@@ -23,20 +22,25 @@ public class FarmerProfileActivity extends AppCompatActivity {
 
     Button buttonChat;
     //Button rating;
+    String farmerEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farmer_profile);
         SessionManagement sessionManagement = new SessionManagement(FarmerProfileActivity.this);
-        String emailUser = sessionManagement.getSession();
-        if (emailUser == null) {
+        String emailUserLog = sessionManagement.getSession();
+        Intent intent = getIntent();
+        farmerEmail = intent.getStringExtra("emailFarmer");
+        if (emailUserLog == null) {
             Toast.makeText(getApplicationContext(), "No user logged in", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(FarmerProfileActivity.this, MainActivity.class);
             startActivity(i);
         } else {
             DBHelper database = new DBHelper(this);
-            TextView name = (TextView) findViewById(R.id.textViewName);
+
+
+            TextView name = findViewById(R.id.textViewName);
 
             TabLayout tabLayout = findViewById(R.id.tabLayout);
             TabItem tabProd = findViewById(R.id.tabProducts);
@@ -63,18 +67,23 @@ public class FarmerProfileActivity extends AppCompatActivity {
             });
 
 
-            Cursor cursor = database.getUser(emailUser);
+            Cursor cursor = database.getUser(farmerEmail);
             cursor.moveToFirst();
             name.setText(cursor.getString(2));
 
+            Cursor cursor1 = database.getUser(emailUserLog);
+            cursor1.moveToFirst();
+
 
             buttonChat = findViewById(R.id.buttonChat);
-            buttonChat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(FarmerProfileActivity.this, ChatActivity.class);
-                    /* intent.putExtra("emailReceiver", emailMessage.getText().toString());
-                    startActivity(intent); */
+            buttonChat.setOnClickListener(v -> {
+                if (cursor1.getString(4).equals("client")) {
+                    Intent intent1 = new Intent(FarmerProfileActivity.this, ChatActivity.class);
+                    intent1.putExtra("emailReceiver", farmerEmail);
+                    startActivity(intent1);
+                } else {
+                    Intent intent1 = new Intent(FarmerProfileActivity.this, ChatContactActivity.class);
+                    startActivity(intent1);
                 }
             });
 

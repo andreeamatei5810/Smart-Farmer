@@ -33,10 +33,11 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         database = new DBHelper(this);
-        Intent pastIntent = getIntent();
         SessionManagement sessionManagement = new SessionManagement(ChatActivity.this);
         String emailUser = sessionManagement.getSession();
+        Intent pastIntent = getIntent();
         String emailReceiver = pastIntent.getStringExtra("emailReceiver");
+        System.out.println(emailReceiver);
         database.readAllMessages(emailUser);
         ArrayList<String> allMessages = database.getMessages(emailUser, emailReceiver);
         usernameReceiver = findViewById(R.id.usernameReceiver);
