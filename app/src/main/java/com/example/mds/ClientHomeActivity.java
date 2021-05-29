@@ -11,7 +11,7 @@ import chat.ChatContactActivity;
 
 public class ClientHomeActivity extends AppCompatActivity {
 
-    Button clientProfile,contacts,logout,rating;
+    Button clientProfile,contacts,logout,feed;
     DBHelper dbHelper;
 
     @Override
@@ -44,6 +44,15 @@ public class ClientHomeActivity extends AppCompatActivity {
                 SessionManagement sessionManagement = new SessionManagement(ClientHomeActivity.this);
                 sessionManagement.removeSession();
                 Intent i = new Intent(ClientHomeActivity.this, LoginActivity.class);
+                startActivity(i);
+            }
+        });
+
+        feed = findViewById(R.id.buttonFeed);
+        feed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ClientHomeActivity.this, FeedActivity.class);
                 startActivity(i);
             }
         });
