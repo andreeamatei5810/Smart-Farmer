@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_green_background"
+            tools:context=".ShopCart">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subscriptions"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textStyle="bold" android:textSize="30sp" android:textColor="#000000"/>
+
+        <View
+                android:id="@+id/SplitLine_hor3"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/red_logout"
+                android:layout_marginTop="40dp"/>
+
+        <TextView
+                android:text="@string/daily_shopping"
+                android:layout_gravity="center"
+                android:layout_width="140dp"
+                android:layout_height="36dp" android:id="@+id/shopDaily"
+                app:layout_constraintTop_toTopOf="@+id/layoutProdFragOneTime" android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:textSize="16sp" android:shadowColor="#FFFFFF" android:textColor="#000000"
+                android:textColorHint="#000000" android:textColorHighlight="#000000" android:textStyle="bold"/>
+
+        <LinearLayout
+                android:id="@+id/layoutProdFragDaily"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:context=".ProductsFragment"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="30dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recViewProductsDaily"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <View
+                android:id="@+id/SplitLine_hor4"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/red_logout"
+                android:layout_marginTop="40dp"/>
+
+        <TextView
+                android:text="@string/weekly_shopping"
+                android:layout_gravity="center"
+                android:layout_width="154dp"
+                android:layout_height="30dp" android:id="@+id/shopWeekly"
+                app:layout_constraintTop_toTopOf="@+id/layoutProdFragOneTime" android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:textSize="16sp" android:shadowColor="#FFFFFF" android:textColor="#000000"
+                android:textColorHint="#000000" android:textColorHighlight="#000000" android:textStyle="bold"/>
+
+        <LinearLayout
+                android:id="@+id/layoutProdFragWeekly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutProdFragDaily"
+                tools:context=".ProductsFragment" android:layout_marginTop="30dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recViewProductsWeekly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <View
+                android:id="@+id/SplitLine_hor5"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/red_logout"
+                android:layout_marginTop="40dp"/>
+
+
+        <TextView
+                android:text="@string/monthly_shopping"
+                android:layout_gravity="center"
+                android:layout_width="160dp"
+                android:layout_height="28dp" android:id="@+id/shopMonthly"
+                app:layout_constraintTop_toTopOf="@+id/layoutProdFragOneTime" android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:textSize="16sp" android:shadowColor="#FFFFFF" android:textColor="#000000"
+                android:textColorHint="#000000" android:textColorHighlight="#000000" android:textStyle="bold"/>
+
+        <LinearLayout
+                android:id="@+id/layoutProdFragMonthly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutProdFragWeekly"
+                android:layout_marginTop="30dp"
+                tools:context=".ProductsFragment">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recViewProductsMonthly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <View
+                android:id="@+id/SplitLine_hor1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/red_logout"
+                android:layout_marginTop="40dp"/>
+
+    </LinearLayout>
+</ScrollView>

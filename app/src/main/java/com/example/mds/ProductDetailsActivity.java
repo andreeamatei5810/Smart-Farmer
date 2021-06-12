@@ -39,7 +39,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         name.setText(product.getProdName());
         price.setText(String.valueOf(product.getProdPrice()));
         description.setText(product.getProdDescription());
-        farmerName.setText(product.getFarmerId());
+        farmerName.setText(farmerName.getText() + " " + product.getFarmerId());
 
         farmerName.setOnClickListener(v -> {
             Intent intent12 = new Intent(ProductDetailsActivity.this, FarmerProfileActivity.class);
@@ -77,8 +77,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 else {
                     RadioButton radioButton = findViewById(selectedId);
                     System.out.println(radioButton.getText());
-                    dbHelper.insertProductInShopCart(String.valueOf(farmerName), emailUser, productId,String.valueOf(radioButton.getText()));
-                    Intent intent1 = new Intent(ProductDetailsActivity.this, ShopCart.class);
+                    dbHelper.insertProductInShopCart(((String) farmerName.getText()).substring(8), emailUser, productId,String.valueOf(radioButton.getText()));
+                    Intent intent1 = new Intent(ProductDetailsActivity.this, FeedActivity.class);
                     intent1.putExtra("idProduct", product.getProdId());
                     startActivity(intent1);
                 }
@@ -99,6 +99,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 dbHelper.deleteProduct(productId);
                 Intent intent1 = new Intent(ProductDetailsActivity.this, FarmerProfileActivity.class);
                 Toast.makeText(getApplicationContext(), "Product was deleted", Toast.LENGTH_SHORT).show();
+                intent1.putExtra("emailFarmer",emailUser);
                 startActivity(intent1);
             }
         });

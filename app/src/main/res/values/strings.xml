@@ -55,4 +55,15 @@
     </string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="home">Home</string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="one_time_shopping">One time shopping</string>
+    <string name="daily_shopping">Daily shopping</string>
+    <string name="weekly_shopping">Weekly shopping</string>
+    <string name="monthly_shopping">Monthly shopping</string>
+    <string name="place_order">Place order</string>
+    <string name="total_for_one_time_shopping">Total for one time shopping:  </string>
+    <string name="total_for_monthly_shopping">Total for monthly shopping:  </string>
+    <string name="total_for_weekly_shopping">Total for weekly shopping:  </string>
+    <string name="total_for_daily_shopping">Total for daily shopping  </string>
+    <string name="total_for_order">Total for order:  </string>
 </resources>

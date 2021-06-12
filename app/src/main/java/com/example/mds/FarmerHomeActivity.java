@@ -11,7 +11,7 @@ import chat.ChatContactActivity;
 
 public class FarmerHomeActivity extends AppCompatActivity {
 
-    Button farmerProfile,addProduct,logout,contacts, farmerAccount;
+    Button farmerProfile,addProduct,logout,contacts, farmerAccount,subs;
     DBHelper dbHelper;
 
     @Override
@@ -66,6 +66,15 @@ public class FarmerHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(FarmerHomeActivity.this,UserProfile.class);
+                startActivity(i);
+            }
+        });
+
+        subs = findViewById(R.id.buttonSub);
+        subs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FarmerHomeActivity.this, UserSubscriptions.class);
                 startActivity(i);
             }
         });

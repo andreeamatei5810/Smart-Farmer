@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+            app:cardElevation="10dp"
+            app:cardCornerRadius="10dp"
+            android:layout_margin="5dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="234dp">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:id="@+id/productImage"
+                    android:layout_margin="8dp"
+                    android:layout_width="140dp"
+                    android:layout_height="209dp"
+                    android:src="@drawable/mood"/>
+            <LinearLayout
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Product name"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:id="@+id/productName"
+                        android:layout_margin="8dp"
+                        android:textStyle="bold"
+
+                />
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Product price"
+                        android:textColor="@android:color/black"
+                        android:layout_margin="8dp"
+                        android:textSize="16sp"
+                        android:id="@+id/productPrice"
+
+                />
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Product quantity"
+                        android:textColor="@android:color/black"
+                        android:layout_margin="8dp"
+                        android:textSize="16sp"
+                        android:id="@+id/productQuantity"
+                />
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Farmer"
+                        android:textColor="@android:color/black"
+                        android:layout_margin="8dp"
+                        android:textSize="16sp"
+                        android:id="@+id/productFarmer"
+                />
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Client"
+                        android:textColor="@android:color/black"
+                        android:layout_margin="8dp"
+                        android:textSize="16sp"
+                        android:id="@+id/productClient"
+                />
+                <ImageButton
+                        android:layout_width="73dp"
+                        android:layout_height="34dp" app:srcCompat="@android:drawable/ic_menu_delete"
+                        android:id="@+id/delete"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

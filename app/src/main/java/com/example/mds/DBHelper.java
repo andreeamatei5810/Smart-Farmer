@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.util.Pair;
+
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -16,6 +18,7 @@ import com.example.mds.model.Product;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.TreeSet;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -37,8 +40,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "timeMessage TEXT, emailSender TEXT, emailReceiver TEXT, readMessage TEXT)");
         DB.execSQL("create table Product(idProduct INTEGER primary key AUTOINCREMENT,farmerId TEXT,productName TEXT" + ",image BLOB,productPrice int, productDescription TEXT)");
         DB.execSQL("create table ShoppingCart(idElementInCart INTEGER primary key AUTOINCREMENT,farmerEmail TEXT, clientEmail TEXT," +
-                "idProduct INTEGER, purchaseType TEXT)");
-
+                "idProduct INTEGER, purchaseType TEXT, quantity INTEGER)");
+        DB.execSQL("create table Subscription(idElementInSubs INTEGER primary key AUTOINCREMENT,farmerEmail TEXT, clientEmail TEXT," +
+                "idProduct INTEGER, purchaseType TEXT, quantity INTEGER)");
     }
 
     @Override
@@ -47,6 +51,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists Product");
         db.execSQL("drop table if exists ChatMessage");
         db.execSQL("drop table if exists ShoppingCart");
+        db.execSQL("drop table if exists Subsription");
+
     }
 
     public boolean insertUser(String email, String password, String username, String phoneNumber, String role) {
@@ -63,7 +69,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getUser(String email) {
         SQLiteDatabase db = this.getWritableDatabase();
-        System.out.println(email);
         return db.rawQuery("select * from User where email =?", new String[]{email});
     }
 
@@ -322,8 +327,19 @@ public class DBHelper extends SQLiteOpenHelper {
     public void deleteProduct(int id) {
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor cursor = DB.rawQuery("select * from Product where idProduct=?", new String[]{String.valueOf(id)});
+
         if (cursor.getCount() > 0) {
             long result = DB.delete("Product", "idProduct=?", new String[]{String.valueOf(id)});
+            Cursor cursor1= DB.rawQuery("select * from ShoppingCart where idProduct=?", new String[]{String.valueOf(id)});
+            if (cursor1.getCount() > 0) {
+                long result1 = DB.delete("ShoppingCart", "idProduct=?", new String[]{String.valueOf(id)});
+            }
+            cursor1.close();
+            Cursor cursor2= DB.rawQuery("select * from Subscription where idProduct=?", new String[]{String.valueOf(id)});
+            if (cursor2.getCount() > 0) {
+                long result1 = DB.delete("Subscription", "idProduct=?", new String[]{String.valueOf(id)});
+            }
+            cursor2.close();
         }
         cursor.close();
 
@@ -370,33 +386,42 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("clientEmail", clientEmail);
         contentValues.put("idProduct", idProduct);
         contentValues.put("purchaseType", purchaseType);
-        long result = DB.insert("ShoppingCart", null, contentValues);
-        if (result != -1) {
-            Toast.makeText(context, "Your product has been successfully added to the shop cart!", Toast.LENGTH_SHORT).show();
-            DB.close();
-        } else {
-            Toast.makeText(context, "Did not work", Toast.LENGTH_SHORT).show();
+        contentValues.put("quantity", 1);
+        if((checkAProductFromSubs(clientEmail, idProduct) && !purchaseType.equals("One time"))
+        || checkAProductFromCart(clientEmail, idProduct)){
+            Toast.makeText(context, "There is already a subscription to the product!", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        return result != -1;
+        else {
+            long result = DB.insert("ShoppingCart", null, contentValues);
+            if (result != -1) {
+                Toast.makeText(context, "Your product has been successfully added to the shop cart!", Toast.LENGTH_SHORT).show();
+                DB.close();
+            } else {
+                Toast.makeText(context, "Did not work", Toast.LENGTH_SHORT).show();
+            }
+            return result != -1;
+        }
     }
 
 
-    public ArrayList<Product> getAllProductsFromShopCart(String clientEmail){
+    public ArrayList<Pair<Product, Integer>> getAllProductsFromShopCart(String clientEmail, String type){
         try{
             SQLiteDatabase SQLDatabase = this.getReadableDatabase();
-            ArrayList<Product> objectModelClassList = new ArrayList<>();
+            ArrayList<Pair<Product, Integer>> objectModelClassList = new ArrayList<>();
 
-            Cursor objectCursor = SQLDatabase.rawQuery("select * from ShoppingCart where clientEmail=?", new String[]{clientEmail});
+            Cursor objectCursor = SQLDatabase.rawQuery("select * from ShoppingCart where clientEmail=? and purchaseType=?", new String[]{clientEmail,type});
             if(objectCursor.getCount()!=-1){
                 while(objectCursor.moveToNext()) {
                     int prodId = objectCursor.getInt(3);
+                    int q = objectCursor.getInt(5);
                     Product product = getProductById(prodId);
-                    objectModelClassList.add(product);
+                    objectModelClassList.add(new Pair<>(product, q));
                 }
                 return objectModelClassList;
             }
             else{
-                Toast.makeText(context,"There are no products in shopping cart!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"There are no products in subscriptions!",Toast.LENGTH_SHORT).show();
                 return null;
             }
         }
@@ -404,5 +429,210 @@ public class DBHelper extends SQLiteOpenHelper {
             return null;
         }
     }
+
+    public ArrayList<Pair<Product, Pair<Integer, String>>> getAllProductsFromSubs(String clientEmail, String type){
+        try{
+            SQLiteDatabase SQLDatabase = this.getReadableDatabase();
+            ArrayList<Pair<Product, Pair<Integer, String>>> objectModelClassList = new ArrayList<>();
+            Cursor objectCursor = SQLDatabase.rawQuery("select * from Subscription where clientEmail=? and purchaseType=?", new String[]{clientEmail,type});
+            if(objectCursor.getCount()!=-1){
+                System.out.println(objectCursor.getCount());
+                while(objectCursor.moveToNext()) {
+                    int prodId = objectCursor.getInt(3);
+                    int q = objectCursor.getInt(5);
+                    String client = objectCursor.getString(2);
+                    Product product = getProductById(prodId);
+                    objectModelClassList.add(new Pair<>(product, new Pair<>(q,client)));
+                }
+                return objectModelClassList;
+            }
+            else{
+                Toast.makeText(context,"There are no products in subscriptions!",Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
+    public ArrayList<Pair<Product, Pair<Integer, String>>> getAllProductsFromSubsForFarmer(String farmerEmail, String type){
+        try{
+            SQLiteDatabase SQLDatabase = this.getReadableDatabase();
+            ArrayList<Pair<Product, Pair<Integer, String>>> objectModelClassList = new ArrayList<>();
+            Cursor objectCursor = SQLDatabase.rawQuery("select * from Subscription where farmerEmail=? and purchaseType=?", new String[]{farmerEmail,type});
+
+            if(objectCursor.getCount()!=-1){
+                while(objectCursor.moveToNext()) {
+                    int prodId = objectCursor.getInt(3);
+                    int q = objectCursor.getInt(5);
+                    String client = objectCursor.getString(2);
+                    Product product = getProductById(prodId);
+                    objectModelClassList.add(new Pair<>(product, new Pair<>(q,client)));
+                }
+                return objectModelClassList;
+            }
+            else{
+                Toast.makeText(context,"There are no products in subscriptions!",Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
+    public boolean checkAProductFromSubs(String clientEmail, int productId){
+        try{
+            SQLiteDatabase SQLDatabase = this.getReadableDatabase();
+
+            Cursor objectCursor = SQLDatabase.rawQuery("select * from Subscription where clientEmail=? and idProduct =?", new String[]{clientEmail, String.valueOf(productId)});
+            return objectCursor.getCount() > 0;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+
+    public boolean checkAProductFromCart(String clientEmail, int productId){
+        try{
+            SQLiteDatabase SQLDatabase = this.getReadableDatabase();
+
+            Cursor objectCursor = SQLDatabase.rawQuery("select * from ShoppingCart where clientEmail=? and idProduct =?", new String[]{clientEmail, String.valueOf(productId)});
+            return objectCursor.getCount() > 0;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+
+    public float getPriceForCart(String clientEmail, String type){
+        try{
+            float price = 0;
+
+            SQLiteDatabase SQLDatabase = this.getReadableDatabase();
+
+            Cursor objectCursor = SQLDatabase.rawQuery("select * from ShoppingCart where clientEmail=? and purchaseType=?", new String[]{clientEmail,type});
+            if(objectCursor.getCount()!=-1){
+                while(objectCursor.moveToNext()) {
+                    int prodId = objectCursor.getInt(3);
+                    int q = objectCursor.getInt(5);
+                    Product product = getProductById(prodId);
+                    price += product.getProdPrice()*q;
+                }
+                return price;
+            }
+            else{
+                Toast.makeText(context,"There are no products in shopping cart!",Toast.LENGTH_SHORT).show();
+                return 0;
+            }
+        }
+        catch(Exception e){
+            return 0;
+        }
+    }
+
+
+    public void deleteProductsFromCart(String clientEmail){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from ShoppingCart where clientEmail=?", new String[]{clientEmail});
+        if (cursor.getCount() > 0) {
+            while(cursor.moveToNext()){
+                ContentValues contentValues = new ContentValues();
+                String farmer = cursor.getString(1);
+                contentValues.put("farmerEmail", farmer);
+                String client =  cursor.getString(2);
+                contentValues.put("clientEmail", client);
+                int id =  cursor.getInt(3);
+                contentValues.put("idProduct", id);
+                String type =  cursor.getString(4);
+                contentValues.put("purchaseType", type);
+                int q =  cursor.getInt(5);
+                contentValues.put("quantity", q);
+                if (!cursor.getString(4).equals("One time")){
+                    long result1 = db.insert("Subscription", null, contentValues);
+                }
+            }
+            long result = db.delete("ShoppingCart", "clientEmail =?", new String[]{clientEmail});
+            cursor.close();
+            Toast.makeText(context,"The order has been placed!",Toast.LENGTH_SHORT).show();
+        } else {
+            cursor.close();
+            Toast.makeText(context,"Something went wrong, please try again!",Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    public void deleteProductFromSubsClient(String clientEmail, int productID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from Subscription where clientEmail=? and idProduct=?", new String[]{clientEmail, String.valueOf(productID)});
+        if (cursor.getCount() > 0) {
+            long result = db.delete("Subscription", "clientEmail =? and idProduct=?", new String[]{clientEmail, String.valueOf(productID)});
+            cursor.close();
+            Toast.makeText(context,"Subscription deleted!",Toast.LENGTH_SHORT).show();
+        } else {
+            cursor.close();
+            Toast.makeText(context,"Something went wrong, please try again!",Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+
+    public int getQuantityFromCart(String clientEmail, int idProduct) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor cursor = DB.rawQuery("select * from ShoppingCart where clientEmail=? and idProduct=?", new String[]{clientEmail, String.valueOf(idProduct)});
+
+        if (cursor.getCount() > 0) {
+            if (cursor.moveToNext()) {
+                int q = cursor.getInt(5);
+                cursor.close();
+                return q;
+            }
+            else{
+                return 0;
+            }
+        }
+        else{
+            return 0;
+        }
+    }
+
+
+    public void increaseQuantityInShoppingCart(String clientEmail, int idProduct, int quantity) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("quantity", quantity);
+        Cursor cursor = DB.rawQuery("select * from ShoppingCart where clientEmail=? and idProduct=?", new String[]{clientEmail, String.valueOf(idProduct)});
+
+        if (cursor.getCount() > 0) {
+            long result = DB.update("ShoppingCart", contentValues, "clientEmail=? and idProduct=?", new String[]{clientEmail, String.valueOf(idProduct)});
+        }
+        cursor.close();
+    }
+
+
+    public void decreaseQuantityInShoppingCart(String clientEmail, int idProduct, int quantity) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("quantity", quantity);
+        Cursor cursor = DB.rawQuery("select * from ShoppingCart where clientEmail=? and idProduct=?", new String[]{clientEmail, String.valueOf(idProduct)});
+        if (cursor.getCount() > 0) {
+            while(cursor.moveToNext()) {
+
+                int q = cursor.getInt(5);
+                if (q > 1) {
+                    long result = DB.update("ShoppingCart", contentValues, "clientEmail=? and idProduct=?", new String[]{clientEmail, String.valueOf(idProduct)});
+                } else if (q == 1) {
+                    Cursor cursor1 = DB.rawQuery("select * from ShoppingCart where clientEmail=? and idProduct=?", new String[]{clientEmail, String.valueOf(idProduct)});
+                    if (cursor1.getCount() > 0) {
+                        long result = DB.delete("ShoppingCart", "clientEmail =? and idProduct=?", new String[]{clientEmail, String.valueOf(idProduct)});
+                        cursor1.close();
+                    }
+                }
+            }
+        }
+        cursor.close();
+    }
+
 
 }
