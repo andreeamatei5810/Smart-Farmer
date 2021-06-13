@@ -57,23 +57,23 @@ public class ClientHomeActivity extends AppCompatActivity {
             }
         });
 
-        cart = findViewById(R.id.buttonCart);
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    Intent i = new Intent(ClientHomeActivity.this, ShopCart.class);
-                startActivity(i);
-            }
-        });
-
-        subs = findViewById(R.id.buttonSub);
-        subs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ClientHomeActivity.this, UserSubscriptions.class);
-                startActivity(i);
-            }
-        });
+//        cart = findViewById(R.id.buttonCart);
+//        cart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                    Intent i = new Intent(ClientHomeActivity.this, ShopCart.class);
+//                startActivity(i);
+//            }
+//        });
+//
+//        subs = findViewById(R.id.buttonSub);
+//        subs.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(ClientHomeActivity.this, UserSubscriptions.class);
+//                startActivity(i);
+//            }
+//        });
     }
 
 

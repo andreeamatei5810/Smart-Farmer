@@ -25,6 +25,7 @@ public class ProductsFragment extends Fragment implements RVAdapter.OnItemListen
 
     private ArrayList<Product> list = new ArrayList<>();
     private DBHelper dbHelper;
+    private String emailFarmer = null;
     public ProductsFragment() {
         // Required empty public constructor
     }
@@ -34,12 +35,13 @@ public class ProductsFragment extends Fragment implements RVAdapter.OnItemListen
         return fragment;
     }
 
+    public void setEmailFarmer(String emailFarmer){
+        this.emailFarmer = emailFarmer;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
     }
 
     @Override
@@ -48,6 +50,7 @@ public class ProductsFragment extends Fragment implements RVAdapter.OnItemListen
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_products, container, false);
         dbHelper = new DBHelper(this.getContext());
+        initList();
         initRecycleView(view);
         return view;
     }
@@ -56,10 +59,16 @@ public class ProductsFragment extends Fragment implements RVAdapter.OnItemListen
         RecyclerView recyclerView = view.findViewById(R.id.recViewProducts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        list = dbHelper.getAllProductsData();
         RVAdapter adapter = new RVAdapter(list,this);
-        //System.out.println(list.get(0).getProdName());
         recyclerView.setAdapter(adapter);
+    }
+
+    private void initList(){
+        if(emailFarmer == null) {
+            list = dbHelper.getAllProductsData();
+        }else{
+            list = dbHelper.getAllProductsByEmail(emailFarmer);
+        }
     }
 
     @Override

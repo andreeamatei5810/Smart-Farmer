@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical"
               android:padding="10dp"
               tools:context=".RatingsFragment">
@@ -19,48 +18,48 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        android:text="Lasati un review"
-        android:textSize="20sp"
-        android:textStyle="italic" />
+        android:text="Give a rating"
+        android:textSize="20sp" />
 
 <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/ratingBarUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:theme="@style/RatingBar"
         android:numStars="5"
         android:rating="5"
         android:stepSize="1" />
 
-<TextView
-        android:id="@+id/tvRatingScale"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="."
-        android:textSize="16sp"
-        android:textStyle="bold" />
 
 <EditText
-        android:id="@+id/etFeedback"
+        android:id="@+id/ratingContentUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"
         android:ems="10"
-        android:gravity="top"
-        android:hint="Adaugati un comentariu"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:hint="Write a comment"
         android:inputType="textMultiLine"
-        android:lines="5" />
+        android:lines="3" />
 
 <Button
-        android:id="@+id/btnSubmit"
+        android:id="@+id/buttonSaveRating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="70dp"
+        android:layout_marginBottom="30dp"
         android:background="#e57373"
         android:text="Send feedback"
         android:textColor="@android:color/white" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recViewRatings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
 </ScrollView>
