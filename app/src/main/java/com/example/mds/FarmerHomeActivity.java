@@ -70,13 +70,13 @@ public class FarmerHomeActivity extends AppCompatActivity {
             }
         });
 
-        subs = findViewById(R.id.buttonSub);
-        subs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(FarmerHomeActivity.this, UserSubscriptions.class);
-                startActivity(i);
-            }
-        });
+//        subs = findViewById(R.id.buttonSub);
+//        subs.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(FarmerHomeActivity.this, UserSubscriptions.class);
+//                startActivity(i);
+//            }
+//        });
     }
 }

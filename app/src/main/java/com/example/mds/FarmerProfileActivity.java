@@ -1,9 +1,9 @@
 package com.example.mds;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import chat.ChatActivity;
 import chat.ChatContactActivity;
+
+import com.example.mds.model.Rating;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
@@ -23,8 +25,8 @@ public class FarmerProfileActivity extends AppCompatActivity {
 
 
     Button buttonChat;
-    //Button rating;
     String farmerEmail;
+    RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +47,8 @@ public class FarmerProfileActivity extends AppCompatActivity {
             TextView name = findViewById(R.id.textViewName);
 
             TabLayout tabLayout = findViewById(R.id.tabLayout);
-            TabItem tabProd = findViewById(R.id.tabProducts);
-            TabItem tabRev = findViewById(R.id.tabRatings);
             ViewPager viewPager = findViewById(R.id.viewPager);
-            PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+            PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),farmerEmail,emailUserLog);
 
             viewPager.setAdapter(pagerAdapter);
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -89,31 +89,10 @@ public class FarmerProfileActivity extends AppCompatActivity {
                 }
             });
 
-            /*rating = findViewById(R.id.ratingBar);
-            rating.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(FarmerProfileActivity.this, RatingsFragment.class));
-                }
-            });*/
+            ratingBar = findViewById(R.id.ratingBar);
+            ratingBar.setRating(database.getRatingsAverage(farmerEmail));
 
 
         }
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.home) {
-            Intent intent = new Intent(getApplicationContext(), GoHome.class);
-            startActivity(intent);
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

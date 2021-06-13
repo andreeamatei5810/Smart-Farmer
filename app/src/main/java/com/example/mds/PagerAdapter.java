@@ -9,10 +9,14 @@ import androidx.fragment.app.FragmentTransaction;
 public class PagerAdapter extends FragmentPagerAdapter {
 
     private int noOfTabs;
+    private String emailFarmer;
+    private String emailUser;
 
-    public PagerAdapter(FragmentManager fm, int noOfTabs){
+    public PagerAdapter(FragmentManager fm, int noOfTabs, String emailFarmer,String emailUser){
         super(fm);
         this.noOfTabs = noOfTabs;
+        this.emailFarmer = emailFarmer;
+        this.emailUser = emailUser;
     }
 
     @NonNull
@@ -20,9 +24,14 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:
-                return new ProductsFragment();
+                Fragment fragment = new ProductsFragment();
+                ((ProductsFragment) fragment).setEmailFarmer(emailFarmer);
+                return fragment;
             case 1:
-                return new RatingsFragment();
+                Fragment fragment2 = new RatingsFragment();
+                ((RatingsFragment) fragment2).setEmailFarmer(emailFarmer);
+                ((RatingsFragment) fragment2).setEmailUser(emailUser);
+                return fragment2;
             default:
                 return null;
         }
