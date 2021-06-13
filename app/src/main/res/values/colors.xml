@@ -7,9 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="purple_icon">#8864C3</color>
+    <color name="purple_icon">#35214D</color>
     <color name="green_end">#14633A</color>
-    <color name="green_start">#45a247</color>
-    <color name="red_logout">#D34646</color>
+    <color name="green_start">#AAFF00</color>
+    <color name="red_logout">#35214D</color>
 
 </resources>

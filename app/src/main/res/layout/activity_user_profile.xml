@@ -5,7 +5,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="5dp"
-            tools:context=".UserProfile">
+            tools:context=".UserProfile"
+            android:background="@drawable/gradient_green_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -18,7 +19,7 @@
                 android:layout_marginStart="165dp"
                 android:layout_marginEnd="172dp"
                 android:text="@string/your_profile"
-                android:textColor="#9E1C1C"
+                android:textColor="#35214D"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/deleteAccount"
-                app:backgroundTint="#9C2020"
+                app:backgroundTint="#35214D"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="35dp"
                 app:layout_constraintEnd_toStartOf="@+id/editAccount" android:layout_marginEnd="52dp"
@@ -89,7 +90,7 @@
                 android:text="@string/edit_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:backgroundTint="#9C2020"
+                app:backgroundTint="#35214D"
                 android:id="@+id/editAccount"
                 app:layout_constraintStart_toEndOf="@+id/deleteAccount"
                 android:layout_marginEnd="49dp"

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".UploadActivity">
+    tools:context=".UploadActivity"
+                android:background="@drawable/gradient_green_background">
 
 
     <EditText

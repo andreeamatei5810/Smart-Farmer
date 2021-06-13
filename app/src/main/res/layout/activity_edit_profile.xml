@@ -5,7 +5,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="5dp"
-            tools:context=".UserProfileEdit">
+            tools:context=".UserProfileEdit"
+            android:background="@drawable/gradient_green_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -18,7 +19,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="172dp"
                 android:text="@string/your_profile"
-                android:textColor="#9E1C1C"
+                android:textColor="#35214D"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_profile"
-                app:backgroundTint="#9C2020"
+                app:backgroundTint="#35214D"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editPhone"

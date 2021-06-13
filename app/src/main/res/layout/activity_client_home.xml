@@ -20,7 +20,7 @@
         android:shadowDy="1.2"
         android:shadowRadius="1.6"
         android:text="Home"
-        android:textColor="#ffffff"
+        android:textColor="#35214D"
         android:textSize="33sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
