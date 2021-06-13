@@ -1,5 +1,6 @@
 package com.example.mds;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -58,28 +59,38 @@ public class RatingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ratings, container, false);
-        rating = view.findViewById(R.id.buttonSaveRating);
+        rating =  view.findViewById(R.id.buttonSaveRating);
         content = view.findViewById(R.id.ratingContentUser);
         ratingBar = view.findViewById(R.id.ratingBarUser);
-
         dbHelper = new DBHelper(this.getContext());
+        initList();
+        Cursor cursor = dbHelper.getUser(emailUser);
+        cursor.moveToFirst();
+        String role = cursor.getString(4);
+        if(role.equals("farmer")){
+            rating.setEnabled(false);
+        }
+        for(Rating rat : list){
+            if(rat.getUserEmail().equals(emailUser)){
+                rating.setEnabled(false);
+            }
+        }
+
 
         rating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(content.getText().toString() != ""){
-                    System.out.println("Am ajuns la adaugarea produsului");
                     Rating rating = new Rating(emailUser,emailFarmer,content.getText().toString(),ratingBar.getRating());
                     dbHelper.addRating(rating);
                     Toast.makeText(view.getContext(), "Added rating", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        initList();
+
         initRecycleView(view);
         return view;
     }
-
     private void initRecycleView(View view){
         RecyclerView recyclerView = view.findViewById(R.id.recViewRatings);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

@@ -58,21 +58,6 @@ public class UserProfile extends AppCompatActivity {
                 startActivity(i);
             });
 
-            backMain = findViewById(R.id.backMain);
-            backMain.setOnClickListener(v -> {
-                Cursor cursor = database.getUser(email);
-                if (cursor.getCount() != 0) {
-                    cursor.moveToFirst();
-                    if (cursor.getString(4).equals("client")) {
-                        Intent intent = new Intent(UserProfile.this, ClientHomeActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(UserProfile.this, FarmerHomeActivity.class);
-                        startActivity(intent);
-                    }
-                }
-            });
-
         }
     }
 

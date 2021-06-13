@@ -11,5 +11,7 @@
     <color name="green_end">#14633A</color>
     <color name="green_start">#AAFF00</color>
     <color name="red_logout">#35214D</color>
+    <color name="grey">#a6a6a6</color>
+    <color name="yellow_star">#ffff00</color>
 
 </resources>

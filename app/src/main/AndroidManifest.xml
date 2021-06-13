@@ -30,6 +30,10 @@
         <activity android:name=".ClientHomeActivity" />
         <activity android:name=".UploadActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".ShopCart" />
+        <activity android:name=".UserSubscriptions" />
+
+
     </application>
 
 </manifest>

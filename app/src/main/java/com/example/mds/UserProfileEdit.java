@@ -18,7 +18,6 @@ public class UserProfileEdit extends AppCompatActivity {
     EditText passwordText;
     EditText usernameText;
     EditText phoneText;
-    ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +55,6 @@ public class UserProfileEdit extends AppCompatActivity {
                         phoneNewValue);
 
             }
-        });
-
-        backButton = findViewById(R.id.back);
-        backButton.setOnClickListener(v -> {
-            Intent i = new Intent(UserProfileEdit.this, UserProfile.class);
-            i.putExtra("email", emailUser);
-            startActivity(i);
         });
 
     }
